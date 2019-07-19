@@ -5,9 +5,10 @@ const { cos, PI: pi, random, sin } = Math
 const MAX_SPEED = 5
 
 export default class MovingObject {
-    constructor ({ position, velocity }) {
+    constructor ({ position, velocity, radius = 20 }) {
         this.position = position
         this.velocity = velocity
+        this.radius = radius
     }
 
     move () {
@@ -19,8 +20,17 @@ export default class MovingObject {
         Canvas.drawCircle({
             x: this.position.x,
             y: this.position.y,
-            radius: 20,
+            radius: this.radius,
         })
+    }
+
+    outOfBounds () {
+        return (
+            this.position.x < 0 - this.radius ||
+            this.position.y < 0 - this.radius ||
+            this.position.x > 500 + this.radius ||
+            this.position.y > 500 + this.radius
+        )
     }
 
     static createRandom () {
@@ -38,7 +48,7 @@ export default class MovingObject {
 
         return new MovingObject({
             position,
-            velocity
+            velocity,
         })
     }
 }

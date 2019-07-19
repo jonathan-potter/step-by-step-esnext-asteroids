@@ -205,12 +205,14 @@
 
 ## Maintain a minimum number of asteroids flying around
 #### MovingObject.js
-- add an `outOfBounds` method to `MovingObject` which will return `true` if the movingObject is out of bounds
+- add an `outOfBounds` method to `MovingObject` which will return `true` if the movingObject is out of bounds (keep the radius in mind)
 #### Game.js
-- add two methods `removeOutOfBounds` and `repopulateAsteroids` to `Game`
+- add a constant `MIN_ASTEROIDS` to the top of the file (after imports) give it a big number
+- add two methods `removeOutOfBounds` and `repopulateAsteroids`
 - `removeOutOfBounds` should filter `outOfBounds` asteroids out of the asteroids list
 - the `repopulateAsteroids` will fill up the asteroids list with new asteroids
 - call the functions in `tick`
+- change the constructor so it only initializes the `asteroids` as an empty array
 #### finish up
 - refresh your browser
 - you should see new asteroids popping onto the stage whenever others have left
