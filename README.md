@@ -42,6 +42,7 @@
     ```html
     <script type="module" src="js/index.js"></script>
     ```
+- populate the `<title>` with a name
 #### terminal
 - initialize your package.json: `npm init -y`
 #### package.json
@@ -58,6 +59,7 @@
 - you should see your background color accross the whole page
 - you should see your console log in the console
 - run `git init` and commit your initial commit
+
 
 ## Draw a circle:
 #### index.html
@@ -118,6 +120,7 @@
 - you should see a circle in the middle of the stage
 - commit your work
 
+
 ## Get your circle moving: (less handholdy)
 #### terminal
 - `mkdir js/classes`
@@ -165,6 +168,7 @@
 - you should see a circle moving across the canvas
 - commit your work
 
+
 ## Make several circles fly around
 #### MovingObject.js
 - modify the `constructor` of `MovingObject` to take the `position` and `velocity` as arguments
@@ -187,7 +191,8 @@
 - they should be flying at different speeds
 - commit your work
 
-## [Intermission] Add in a linter
+
+## [Interlude] Add in a linter
 #### terminal
 - install [eslint](https://eslint.org/) into your `node_modules` as a dev dependency: `yarn add -D eslint babel-eslint eslint-plugin-babel`
 #### .eslintrc.js
@@ -202,6 +207,8 @@
 - you should see typos or rules violations highlighted in your text editor
 - if you don't see any highlighted sections, add some typos to make sure this is working
 - run `yarn lint --fix` to make all of your code nice and consistent
+- commit your work
+
 
 ## Maintain a minimum number of asteroids flying around
 #### MovingObject.js
@@ -218,6 +225,7 @@
 - you should see new asteroids popping onto the stage whenever others have left
 - commit your work
 
+
 ## Make the asteroids enter from the side
 #### MovingObject.js
 - create a new `static` factory function to create new asteroids on the edge of the boundary
@@ -228,6 +236,19 @@
 - you should see the asteroids entering from the edge of the stage
 - you should not see any pop into existence in the middle of the stage
 - commit your work
+
+
+## [Interlude] Fix the favicon error
+#### browser
+- download this [favicon.ico](https://github.com/jonathan-potter/es6-asteroids/blob/master/favicon.ico)
+#### text editor
+- add it to your root directory
+#### finish up
+- refresh your browser
+- you should see your new favicon in the browser tab
+- the favicon error in your console should be gone
+- commit your work
+
 
 ## Add a ship!!!
 #### Ship.js
@@ -247,9 +268,11 @@
 - you should see your ship sitting in the middle of the stage
 - commit your work
 
+
 ## Small interlude
 - [ADD WEBPACK!!!](https://webpack.js.org/guides/getting-started/)
 - [ADD ESLINT](https://eslint.org/)
+
 
 ## Make the ship fly!!!
 #### terminal
@@ -267,6 +290,7 @@
 - refresh your browser
 - you should be able to turn your ship using `left` and `right` and accelerate by pressing `up`
 - commit your work
+
 
 ## Make the ship wrap around the screen
 #### MovingObject.js
@@ -291,6 +315,7 @@
 - you should be able to press `space` and see bullets flying out of your ship (make sure they have cool color and aren't huge)
 - commit your work
 
+
 ## Add Bullet/Asteroid collisions!
 #### MovingObject.js
 - add a new method called `isCollidedWith(otherMovingObject)` which will return `true` if the distance between the `position`s is less than the sum of their radii
@@ -303,6 +328,7 @@
 - you should be able to shoot asteroids, when the a bullet hits an asteroid, both should disappear
 - commit your work
 
+
 ## Add Ship/Asteroid collisions (and the end of the game)!
 #### Game.js
 - in the `start` method, flag `this` as `running` (`this.running = true`)
@@ -314,6 +340,7 @@
 - refresh your browser
 - the game should stop when you run into an asteroid (you can make this fancier later)
 - commit your work
+
 
 ## Make the Asteroids break up
 #### MovingObject.js
@@ -329,6 +356,7 @@
 - refresh your browser
 - asteroids should now break up into smaller asteroids when hit. third generation asteroids should just disappear
 - commit your work
+
 
 ## Additional Ideas
 #### Easy
