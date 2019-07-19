@@ -38,7 +38,7 @@
     ```html
     <link rel="stylesheet" href="css/app.css">
     ```
-- add your `<script>` tag at the bottom of the `<body>` tag
+- add your `<script>` tag at the bottom of the `<body>` tag (`type="module"` will be necessary)
     ```html
     <script type="module" src="js/index.js"></script>
     ```
@@ -60,11 +60,13 @@
 - run `git init` and commit your initial commit
 
 ## Draw a circle:
-- add this `canvas` element to your html
+#### index.html
+- add this `canvas` element to the body of your html
   ```html
   <canvas id="canvas-stage" width="500" height="500"></canvas>
   ```
-- add css so that the canvas is 500x500 pixels and has a `2px solid white border` and center it on the screen
+#### app.css
+- add css so that the `canvas` is 500x500 pixels, has a `2px` border, and is centered on the screen
     ```css
     body {
         display: flex;
@@ -78,8 +80,12 @@
         border: 2px solid white;
     }
     ```
-- add a `js/utility` directory
-- create a file called `Canvas.js` in `js/utility` with the following contents:
+#### terminal
+- `mkdir -p js/utility`
+- `touch js/utility/Canvas.js`
+#### Canvas.js
+- the following javascript is a very simple utility for drawing a circle on the canvas
+- add it to the new `Canvas.js` file:
     ```js
     const canvas = document.getElementById('canvas-stage')
     const context = canvas.getContext('2d')
@@ -99,6 +105,7 @@
         },
     }
     ```
+#### index.js
 - change your `js/index.js` file to import the `Canvas` utility and draw a circle in the middle of your canvas
     ```js
     import Canvas from '/js/utility/Canvas.js'
@@ -107,6 +114,7 @@
     ```
 #### finish up
 - refresh your browser
+- you should see your square canvas in the center of the browser with a white border
 - you should see a circle in the middle of the stage
 - commit your work
 
