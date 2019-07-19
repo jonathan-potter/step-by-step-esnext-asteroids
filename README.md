@@ -1,13 +1,12 @@
 # Step by Step ESNext Asteroids
 
-##Goals
-- teach super basic game loop
+## Goals
+- teach a super basic game architecture
 - introduce webpack
 - introduce dev assistance tools (eslint, editorconfig, html-boilerplate)
 - have fun :)
 
-
-## Prep your files:
+## Prep your project files:
 #### terminal
 - `mkdir asteroids`
 - `cd asteroids`
@@ -44,7 +43,7 @@
     <script type="module" src="js/index.js"></script>
     ```
 #### terminal
-- `npm init -y`
+- initialize your package.json: `npm init -y`
 #### package.json
 - set the scripts section of your new `package.json` to:
     ```json
@@ -161,6 +160,22 @@
 - refresh your browser
 - lots of asteroids should be flying around
 - commit your work
+
+## [Intermission] Add in a linter
+#### terminal
+- install [eslint](https://eslint.org/) into your `node_modules` as a dev dependency: `yarn add -D eslint babel-eslint eslint-plugin-babel`
+#### .eslintrc.js
+- copy this [.eslintrc.js](https://github.com/jonathan-potter/es6-asteroids/blob/master/.eslintrc.js) file into your root directory
+#### text editor
+- install the `eslint` plugin into your text editor
+#### package.js
+- add `"lint": "eslint js/"` to your `package.json` `scripts` section
+#### note
+- feel free to change any of the rules in the `.eslintrc.js` at any time to fit your desired style (DO NOT DO THIS IN A TEAM SETTING WITHOUT TALKING TO YOUR TEAM)
+#### finish up
+- you should see typos or rules violations highlighted in your text editor
+- if you don't see any highlighted sections, add some typos to make sure this is working
+- run `yarn lint --fix` to make all of your code nice and consistent
 
 ## Maintain a minimum number of asteroids flying around
 #### MovingObject.js
