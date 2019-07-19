@@ -119,17 +119,28 @@
 - commit your work
 
 ## Get your circle moving: (less handholdy)
-#### MovingOjbect.js
+#### terminal
 - `mkdir js/classes`
-- `touch MovingObject.js`
-- add a new file `js/classes/MovingObject.js`
-- declare a new class `MovingObject.js` with three functions: `constructor`, `move`, and `draw`
+- `touch js/classes/MovingObject.js`
+#### MovingOjbect.js
+- declare a new class `MovingObject` with three functions: `constructor`, `move`, and `draw`
+    ```js
+    export default class MovingObject {
+        constructor() {}
+
+        move() {}
+
+        draw() {}
+    }
+    ```
 - inside the `constructor` add a `position` and `velocity` to the new `movingObject`
-    - the `position` and `velocity` should be objects with `x` and `y` propreties
-- the `move` should modify the position by adding the velocity to the position
+    - the `position` and `velocity` should be objects with `x` and `y` properties
+    - put the position in the center of the screen
+    - the velocity will be `pixels / frame` so keep the numbers small but non-zero (1 is fine)
+- the `move` should modify the `position` by adding the `velocity` to the `position`
 - the draw command should use `Canvas.drawCircle` from the previous section
 #### index.js
-- rewrite `index.js` to create a `MovingObject` you can use [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) to get things going:
+- rewrite `index.js` to create a `MovingObject` and use [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) to get things going:
     ```js
     import MovingObject from '/js/classes/MovingObject.js'
 
@@ -141,11 +152,11 @@
         requestAnimationFrame(tick)
     }
 
-    tick();
+    tick()
     ```
 #### Make a circle move instead of a line
 - return to your `Canvas` file and add a `clear` function
-- the clear function is going to look something like this `context.clearRect(0, 0, 1e9, 1e9)
+- the clear function is going to look something like this `context.clearRect(0, 0, 1e9, 1e9)`
 - add `Canvas.clear()` to the beginning of your `tick` function in `index.js`
 #### finish up
 - refresh the browser
