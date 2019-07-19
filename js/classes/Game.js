@@ -19,15 +19,12 @@ export default class Game {
     }
 
     removeOutOfBounds () {
-        this.asteroids.forEach(asteroid => {
-            console.log(asteroid.outOfBounds())
-        })
         this.asteroids = this.asteroids.filter(asteroid => !asteroid.outOfBounds())
     }
 
     repopulateAsteroids () {
         while (this.asteroids.length < MIN_ASTEROIDS) {
-            this.asteroids.push(MovingObject.createRandom())
+            this.asteroids.push(MovingObject.createRandomOnBoundary())
         }
     }
 

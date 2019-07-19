@@ -226,6 +226,7 @@
 #### finish up
 - refresh your browser
 - you should see the asteroids entering from the edge of the stage
+- you should not see any pop into existence in the middle of the stage
 - commit your work
 
 ## Add a ship!!!

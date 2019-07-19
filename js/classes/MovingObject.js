@@ -51,4 +51,20 @@ export default class MovingObject {
             velocity,
         })
     }
+
+    static createRandomOnBoundary () {
+        const movingObject = MovingObject.createRandom()
+
+        const axis = random() < 0.5 ?
+            'x' :
+            'y'
+
+        const location = random() < 0.5 ?
+            0 - movingObject.radius :
+            500 + movingObject.radius
+
+        movingObject.position[axis] = location
+
+        return movingObject
+    }
 }
