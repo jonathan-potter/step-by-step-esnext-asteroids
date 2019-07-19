@@ -31,7 +31,11 @@ module.exports = {
         ],
         'comma-dangle': [
             'error',
-            'only-multiline'
+            'always-multiline'
+        ],
+        'space-before-function-paren': [
+            'error',
+            'always'
         ]
     }
 }

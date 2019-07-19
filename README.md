@@ -144,6 +144,8 @@
     ```js
     import MovingObject from '/js/classes/MovingObject.js'
 
+    const { requestAnimationFrame } = window
+
     const movingObject = new MovingObject()
 
     function tick() {
@@ -163,9 +165,8 @@
 - you should see a circle moving across the canvas
 - commit your work
 
-## Make LOTS of Circlers Fly Around
+## Make several circles fly around
 #### MovingObject.js
-`MovingObject` needs to be modified so that all of the movingObjects aren't all sitting right on top of each other
 - modify the `constructor` of `MovingObject` to take the `position` and `velocity` as arguments
 - create a `static` function attached to `MovingObject` called `createRandom` this function should generate a random `position` and `velocity` and return a new `MovingObject` with those applied.
 #### Game.js
@@ -175,9 +176,15 @@
 - the `move` method should call `move` on every `asteroid`
 - the `draw` method should call `draw` on every `asteroid`
 - the `tick` method should call `Canvas.clear`, `move`, and `draw` from `Game` and use [requestAnimationFrame](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) to keep itself going
+#### index.js
+- remove everything in `index.js`
+- create a new `Game` and call `tick` on it to get things started
 #### finish up
 - refresh your browser
-- lots of asteroids should be flying around
+- several of asteroids should be flying around
+- they should start at different directions
+- they should be flying in different directions
+- they should be flying at different speeds
 - commit your work
 
 ## [Intermission] Add in a linter

@@ -4,11 +4,11 @@ const context = canvas.getContext('2d')
 const { PI } = Math
 
 export default {
-    clear() {
+    clear () {
         context.clearRect(0, 0, 1e9, 1e9)
     },
 
-    drawCircle({ x, y, radius, color = 'white', lineWidth = 2 }) {
+    drawCircle ({ x, y, radius, color = 'white', lineWidth = 2 }) {
         context.beginPath()
 
         context.lineWidth = lineWidth
