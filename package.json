@@ -1,0 +1,12 @@
+{
+    "name": "step-by-step-esnext-asteroids",
+    "version": "1.0.0",
+    "description": "##Goals - teach super basic game loop - introduce webpack - introduce dev assistance tools (eslint, editorconfig, html-boilerplate) - have fun :)",
+    "main": "index.js",
+    "scripts": {
+        "start": "python -m SimpleHTTPServer 2222"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

@@ -18,8 +18,21 @@
 #### index.js
 - add a `console.log`
 #### app.css
-- add a css reset which will set `padding`, `border`, and `margin` to `0` for `html`, `body`, and `canvas`
-- give `html` and `body` `100%` `width` and `height` and give them a `background-color`
+- add the following to your css file
+    ```css
+    /* css reset */
+    html, body, canvas {
+        padding: 0;
+        border: 0;
+        margin: 0;
+    }
+
+    html, body {
+        width: 100%;
+        height: 100%;
+        background-color: black;
+    }
+    ```
 #### index.html
 - prepopulate your html file using something like `HTML5-boilerplate` (or just do it yourself)
 - add your `<link>` tag at the bottom of the `<head>` tag
@@ -40,7 +53,7 @@
     },
     ```
 #### terminal
-- use the new `start` script in the terminal: run `yarn start`
+- use the new `start` script in the terminal: `yarn start`
 #### finish up
 - open your browser and go to [localhost:2222](http://localhost:2222/)
 - you should see your background color accross the whole page
