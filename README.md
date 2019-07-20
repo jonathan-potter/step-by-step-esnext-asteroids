@@ -261,8 +261,6 @@
 - instantiate a new `Ship` in the `constructor` and add it to the game instance
 - make sure the ship is centered and isn't moving
 - add calls to `move` and `draw` the ship in the `move` and `draw` methods of `Game`
-### MovingObject.js
-- modify `draw` so that it passes `color` to `drawCircle`
 #### finish up
 - refresh your browser
 - you should see your ship sitting in the middle of the stage
