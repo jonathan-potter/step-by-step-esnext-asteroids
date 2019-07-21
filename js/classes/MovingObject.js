@@ -1,10 +1,6 @@
 import Canvas from 'utility/Canvas.js'
 import Vec2 from 'classes/Vec2.js'
 
-const { cos, PI: pi, random, sin } = Math
-
-const MAX_SPEED = 5
-
 export default class MovingObject {
     constructor ({ position, velocity, radius = 20, color = 'white' }) {
         this.position = position
@@ -53,38 +49,9 @@ export default class MovingObject {
         return distance < this.radius + otherObject.radius
     }
 
-    static createRandom () {
-        const position = new Vec2({
-            y: 500 * random(),
-            x: 500 * random(),
-        })
+    handleCollision () {
+        if (!this.hit) { return this }
 
-        const direction = 2 * pi * random()
-        const speed = MAX_SPEED * random()
-        const velocity = new Vec2({
-            x: speed * cos(direction),
-            y: speed * sin(direction),
-        })
-
-        return new MovingObject({
-            position,
-            velocity,
-        })
-    }
-
-    static createRandomOnBoundary () {
-        const movingObject = MovingObject.createRandom()
-
-        const axis = random() < 0.5 ?
-            'x' :
-            'y'
-
-        const location = random() < 0.5 ?
-            0 - movingObject.radius :
-            500 + movingObject.radius
-
-        movingObject.position[axis] = location
-
-        return movingObject
+        return
     }
 }

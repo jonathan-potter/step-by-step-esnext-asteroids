@@ -394,11 +394,17 @@
 - add a new method `handleCollision` which returns itself if it has not been hit, `undefined` if it has
 #### Asteroid.js
 - add a new class `Asteroid` which inherits from `MovingObject`
-- in the `constructor` make sure you pass the arguments to `super` then add `this.generation = 1`
-- add a new method `handleCollision` which will return 3 smaller `asteroids` flying away from the parent with their `generation` number incremented
+- in the `constructor` make sure you pass the arguments to `super`
+- pass a `generation` integer (default to 1) to the the `constructor` and add it to `this`
+- override `handleCollision` from `MovingObject`. The `Asteroid` version should return 3 smaller `asteroids` flying away from the parent with their `generation` number incremented
 - don't return anything from `handleCollision` if the `asteroid`'s `generation` is 3
+- move the static functions from `MovingObject` into `Asteroid` and fix them up so they return `Asteroid`s
+#### terminal
+- `yarn add lodash`
 #### Game.js
-- modify `handleCollision` so that it will now iterate over all of the `asteroids` and `bullets` and call `handleCollision` on them. `flatten` and `compact` the returned objects back into `asteroids` and `bullets`
+- change `MovingObject.createRandom...` to the new `Asteroid` version
+- modify `handleCollision` so that it will now iterate over all of the `asteroids` and `bullets` and call `handleCollision` on them.
+- use `flatten` and `compact` from `lodash` to clean up the returned arrays
 #### finish up
 - refresh your browser
 - asteroids should now break up into smaller asteroids when hit. third generation asteroids should just disappear

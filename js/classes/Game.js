@@ -1,12 +1,13 @@
+import Asteroid from 'classes/Asteroid.js'
 import Canvas from 'utility/Canvas.js'
+import flatten from 'lodash/flatten'
 import key from 'keymaster'
-import MovingObject from 'classes/MovingObject.js'
 import Ship from 'classes/Ship.js'
 import Vec2 from 'classes/Vec2.js'
 
 const { requestAnimationFrame } = window
 
-const MIN_ASTEROIDS = 10
+const MIN_ASTEROIDS = 5
 
 export default class Game {
     constructor () {
@@ -48,7 +49,7 @@ export default class Game {
 
     repopulateAsteroids () {
         while (this.asteroids.length < MIN_ASTEROIDS) {
-            this.asteroids.push(MovingObject.createRandomOnBoundary())
+            this.asteroids.push(Asteroid.createRandomOnBoundary())
         }
     }
 
@@ -68,11 +69,10 @@ export default class Game {
     }
 
     handleCollisions () {
-        this.asteroids = this.asteroids.filter(asteroid => !asteroid.hit)
-        this.bullets = this.bullets.filter(bullet => !bullet.hit)
-        if (this.ship.hit) {
-            this.stop()
-        }
+        this.asteroids = flatten(this.asteroids.map(asteroid => asteroid.handleCollision()).filter(Boolean))
+        this.bullets = flatten(this.bullets.map(bullet => bullet.handleCollision()).filter(Boolean))
+
+        if (this.ship.hit) { this.stop() }
     }
 
     tick () {
