@@ -359,6 +359,9 @@
 
 
 ## Add Bullet/Asteroid collisions!
+#### Vec2.js
+- add a static function `distance` which will return the distance between two given vectors (which can be thought of a coordinates here)
+- you may find it easiest to do this by adding other new method(s) to `Vec2`
 #### MovingObject.js
 - add a new method called `isCollidedWith(otherMovingObject)` which will return `true` if the distance between the `position`s is less than the sum of their radii
 #### Game.js

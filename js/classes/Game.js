@@ -43,11 +43,29 @@ export default class Game {
         }
     }
 
+    checkCollisions () {
+        this.bullets.forEach(bullet => {
+            this.asteroids.forEach(asteroid => {
+                if (!bullet.isCollidedWith(asteroid)) { return }
+
+                bullet.hit = true
+                asteroid.hit = true
+            })
+        })
+    }
+
+    handleCollisions () {
+        this.asteroids = this.asteroids.filter(asteroid => !asteroid.hit)
+        this.bullets = this.bullets.filter(bullet => !bullet.hit)
+    }
+
     tick () {
         Canvas.clear()
 
         this.repopulateAsteroids()
         this.move()
+        this.checkCollisions()
+        this.handleCollisions()
         this.removeOutOfBounds()
         this.draw()
 

@@ -47,6 +47,12 @@ export default class MovingObject {
         if (direction === 'W') { return this.position.x += 500 + this.radius * 2 }
     }
 
+    isCollidedWith (otherObject) {
+        const distance = Vec2.distance(this.position, otherObject.position)
+
+        return distance < this.radius + otherObject.radius
+    }
+
     static createRandom () {
         const position = new Vec2({
             y: 500 * random(),
