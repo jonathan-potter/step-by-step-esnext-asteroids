@@ -4,6 +4,7 @@
     "description": "asteroids tutorial using fancy new stuff",
     "main": "index.js",
     "scripts": {
+        "build": "webpack",
         "start": "webpack-dev-server",
         "lint": "eslint js/"
     },
