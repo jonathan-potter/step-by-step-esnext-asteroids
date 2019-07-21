@@ -411,6 +411,26 @@
 - commit your work
 
 
+## Deploy it so you can show off!
+#### Github
+- create a repository if you have not already
+- push your code
+#### package.json
+- add a `build` script which calls `"webpack"` to the `scripts` section
+#### terminal
+- run the following:
+    ```sh
+    git checkout -b gh-pages
+    yarn build
+    git add .
+    git commit -m "deployment"
+    git push --set-upstream origin gh-pages
+    git checkout
+    ```
+#### browser
+- open the following url: `[your github user name].github.io/[your repo name]`
+
+
 ## Additional Ideas
 #### Easy
 - add points
