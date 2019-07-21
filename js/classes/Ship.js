@@ -1,10 +1,12 @@
 import Canvas from 'utility/Canvas.js'
+import key from 'keymaster'
 import MovingObject from 'classes/MovingObject.js'
 
 const { cos, PI: pi, sin } = Math
 
 const INITIAL_DIRECTION = -pi / 2 // up
 const SHIP_COLOR = '#f88'
+const ACCELERATION_CONSTANT = 0.1
 
 export default class Ship extends MovingObject {
     constructor () {
@@ -30,6 +32,17 @@ export default class Ship extends MovingObject {
         })
     }
 
+    move () {
+        if (key.isPressed('left')) { this.direction -= 0.1 }
+        if (key.isPressed('right')) { this.direction += 0.1 }
+
+        this.velocity.x += this.acceleration.x
+        this.velocity.y += this.acceleration.y
+
+        this.position.x += this.velocity.x
+        this.position.y += this.velocity.y
+    }
+
     get frontPosition () {
         var dx = this.radius * cos(this.direction)
         var dy = this.radius * sin(this.direction)
@@ -37,6 +50,15 @@ export default class Ship extends MovingObject {
         return {
             x: this.position.x + dx,
             y: this.position.y + dy,
+        }
+    }
+
+    get acceleration () {
+        if (!key.isPressed('up')) { return { x: 0, y: 0 } }
+
+        return {
+            x: ACCELERATION_CONSTANT * cos(this.direction),
+            y: ACCELERATION_CONSTANT * sin(this.direction),
         }
     }
 }

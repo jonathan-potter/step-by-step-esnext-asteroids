@@ -137,7 +137,7 @@
     }
     ```
 - inside the `constructor` add a `position` and `velocity` to the new `movingObject`
-    - the `position` and `velocity` should be objects with `x` and `y` properties
+    - the `position` and `velocity` should be objects with `x` and `y` properties (I will refer to this type of object as a vector from now on)
     - put the position in the center of the screen
     - the velocity will be `pixels / frame` so keep the numbers small but non-zero (1 is fine)
 - the `move` should modify the `position` by adding the `velocity` to the `position`
@@ -240,7 +240,7 @@
 
 ## [Interlude] Fix the favicon error
 #### browser
-- download this [favicon.ico](https://github.com/jonathan-potter/es6-asteroids/blob/master/favicon.ico)
+- download this [favicon.ico](https://github.com/jonathan-potter/step-by-step-esnext-asteroids/blob/master/favicon.ico)
 #### text editor
 - add it to your root directory
 #### finish up
@@ -271,7 +271,7 @@
 #### terminal
 - `yarn add -D webpack webpack-cli webpack-dev-server`
 #### browser
-- download the following file: [webpack.config.js](tbd) and place it in the project root directory
+- download the following file: [webpack.config.js](https://github.com/jonathan-potter/step-by-step-esnext-asteroids/blob/master/webpack.config.js) and place it in the project root directory
 #### package.json
 - change the `start` script to `webpack-dev-server`
 #### index.html
@@ -284,13 +284,14 @@
 #### terminal
 - `yarn add keymaster`
 #### Ship.js
-- import `keymaster` into `Ship.js`
+- import [keymaster](https://www.npmjs.com/package/keymaster) into `Ship.js`
     ```js
     import key from 'keymaster'
     ```
-- copy `move` from `MovingObject` so that it checks whether you are pressing `left` or `right` (or whichever buttons you like)
+- copy `move` from `MovingObject`
+- modify `move` so that it checks whether you are pressing `left` or `right` [(take a look at keymaster docs)](https://www.npmjs.com/package/keymaster)
 - if `left` or `right` are pressed during the `move` add or subtract a bit from the direction of the ship
-- add an `getAcceleration` method which will return a `Vec2` pointed in the direction your ship is aiming if `up` is pressed. otherwise return a null vector (`{ x: 0, y: 0 }` but in a `Vec2`)
+- add an `getAcceleration` method which will return a `vector` pointed in the direction your ship is aiming if `up` is pressed. otherwise return a null vector (`{ x: 0, y: 0 }`)
 - modify `move` so that the acceleration returned by `getAcceleration` is added to `velocity`
 #### finish up
 - refresh your browser

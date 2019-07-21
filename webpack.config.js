@@ -6,6 +6,7 @@ module.exports = {
     devtool: 'inline-source-map',
     devServer: {
         contentBase: path.join(__dirname),
+        publicPath: '/build/',
     },
     entry: './js/index.js',
     output: {
