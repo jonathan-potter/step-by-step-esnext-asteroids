@@ -1,6 +1,6 @@
-import Canvas from '/js/utility/Canvas.js'
-import MovingObject from '/js/classes/MovingObject.js'
-import Ship from '/js/classes/Ship.js'
+import Canvas from 'utility/Canvas.js'
+import MovingObject from 'classes/MovingObject.js'
+import Ship from 'classes/Ship.js'
 
 const { requestAnimationFrame } = window
 
@@ -13,6 +13,7 @@ export default class Game {
             position: { x: 250, y: 250 },
             velocity: { x: 0,   y: 0   },
         })
+        this.tick = this.tick.bind(this)
     }
 
     move () {
@@ -35,7 +36,7 @@ export default class Game {
         }
     }
 
-    tick = () => {
+    tick () {
         Canvas.clear()
 
         this.repopulateAsteroids()

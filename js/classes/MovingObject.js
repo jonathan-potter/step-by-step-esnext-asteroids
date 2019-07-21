@@ -1,4 +1,4 @@
-import Canvas from '/js/utility/Canvas.js'
+import Canvas from 'utility/Canvas.js'
 
 const { cos, PI: pi, random, sin } = Math
 

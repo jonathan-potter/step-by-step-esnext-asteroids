@@ -1,5 +1,5 @@
-import Canvas from '/js/utility/Canvas.js'
-import MovingObject from '/js/classes/MovingObject.js'
+import Canvas from 'utility/Canvas.js'
+import MovingObject from 'classes/MovingObject.js'
 
 const { cos, PI: pi, sin } = Math
 

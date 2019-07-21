@@ -267,9 +267,17 @@
 - commit your work
 
 
-## Small interlude
-- [ADD WEBPACK!!!](https://webpack.js.org/guides/getting-started/)
-- [ADD ESLINT](https://eslint.org/)
+## [Interlude] Add [Webpack](https://webpack.js.org/guides/getting-started/)
+#### terminal
+- `yarn add -D webpack webpack-cli webpack-dev-server`
+#### browser
+- download the following file: [webpack.config.js](tbd) and place it in the project root directory
+#### package.json
+- change the `start` script to `webpack-dev-server`
+#### index.html
+- change the `src` for the `script` tag to `"build/bundle.js"`
+#### /js/*
+- remove `"/js/"` from the beginning from all of the `import` statements in your javascript files
 
 
 ## Make the ship fly!!!
