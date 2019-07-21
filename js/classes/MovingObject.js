@@ -1,19 +1,20 @@
 import Canvas from 'utility/Canvas.js'
+import Vec2 from 'classes/Vec2.js'
 
 const { cos, PI: pi, random, sin } = Math
 
 const MAX_SPEED = 5
 
 export default class MovingObject {
-    constructor ({ position, velocity, radius = 20 }) {
+    constructor ({ position, velocity, radius = 20, color = 'white' }) {
         this.position = position
         this.velocity = velocity
         this.radius = radius
+        this.color = color
     }
 
     move () {
-        this.position.x += this.velocity.x
-        this.position.y += this.velocity.y
+        this.position = this.position.add(this.velocity)
     }
 
     draw () {
@@ -21,6 +22,7 @@ export default class MovingObject {
             x: this.position.x,
             y: this.position.y,
             radius: this.radius,
+            color: this.color,
         })
     }
 
@@ -46,17 +48,17 @@ export default class MovingObject {
     }
 
     static createRandom () {
-        const position = {
+        const position = new Vec2({
             y: 500 * random(),
             x: 500 * random(),
-        }
+        })
 
         const direction = 2 * pi * random()
         const speed = MAX_SPEED * random()
-        const velocity = {
+        const velocity = new Vec2({
             x: speed * cos(direction),
             y: speed * sin(direction),
-        }
+        })
 
         return new MovingObject({
             position,

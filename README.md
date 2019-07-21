@@ -311,6 +311,37 @@
 - you should be able to fly your ship over the edge of the stage in any direction and have it appear on the other side
 - commit your work
 
+
+## [refactor] Create Vec2 class
+#### terminal
+- `touch js/classes/Vec2.js`
+#### Vec2.js
+- add the following code to your new `Vec2.js` file
+    ```js
+    export default class Vec2 {
+        constructor ({ x = 0, y = 0 }) {
+            this.x = x
+            this.y = y
+        }
+
+        add (vector) {
+            return new Vec2({
+                x: this.x + vector.x,
+                y: this.y + vector.y,
+            })
+        }
+    }
+    ```
+#### MovingObject.js and wherever you set the position and velocity of the ship
+- change the `position` and `velocity` used to create new `MovingObject`s and the ship
+#### MovingObject.js and Ship.js
+- modify `move` so that the vector additions now use `Vec2#add`
+#### finish up
+- refresh your browser
+- everything should still work the same way in the browser
+- we now get to use `Vec2`s!
+- commit your work
+
 ## Add Bullets!
 #### Ship.js
 - add a new method called `shoot` to `Ship` which returns a `MovingObject` starting at the front of your ship and moving away from it in the direction the ship is pointing. you may choose how fast...
@@ -319,6 +350,8 @@
 - add a new method called `bindHandlers` which will bind the `space` key to a function which calls the ship's `shoot` method
 - place the returned `MovingObject` from the `shoot` method into the `bullets` array
 - make sure you do something with `bullets` in your `move`, `draw`, and `removeOutOfBounds` methods
+#### note
+- you may need to modify some other stuff if you want to change the color of the bullets
 #### finish up
 - refresh your browser
 - you should be able to press `space` and see bullets flying out of your ship (make sure they have cool color and aren't huge)
