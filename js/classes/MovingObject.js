@@ -25,12 +25,24 @@ export default class MovingObject {
     }
 
     outOfBounds () {
-        return (
-            this.position.x < 0 - this.radius ||
-            this.position.y < 0 - this.radius ||
-            this.position.x > 500 + this.radius ||
-            this.position.y > 500 + this.radius
-        )
+        return Boolean(this.outOfBoundsDirection())
+    }
+
+    outOfBoundsDirection () {
+        if (this.position.y <   0 - this.radius) { return 'N' }
+        if (this.position.x > 500 + this.radius) { return 'E' }
+        if (this.position.y > 500 + this.radius) { return 'S' }
+        if (this.position.x <   0 - this.radius) { return 'W' }
+    }
+
+    wrap () {
+        const direction = this.outOfBoundsDirection()
+        if (!direction) { return }
+
+        if (direction === 'N') { return this.position.y += 500 + this.radius * 2 }
+        if (direction === 'E') { return this.position.x -= 500 + this.radius * 2 }
+        if (direction === 'S') { return this.position.y -= 500 + this.radius * 2 }
+        if (direction === 'W') { return this.position.x += 500 + this.radius * 2 }
     }
 
     static createRandom () {

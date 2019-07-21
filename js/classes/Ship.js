@@ -41,6 +41,8 @@ export default class Ship extends MovingObject {
 
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
+
+        this.wrap()
     }
 
     get frontPosition () {

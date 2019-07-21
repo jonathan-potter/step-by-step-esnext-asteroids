@@ -301,8 +301,10 @@
 
 ## Make the ship wrap around the screen
 #### MovingObject.js
-- rewrite `outOfBounds` as `outOfBoundsDirection` so that it returns which direction you are out of bounds. this could be something like `N`, `E`, `S`, `W` or `+x`, `-x`, `+y`, `-y` or even an object with axis and direction
-- add a `wrap` method which will move the ship to the oposite side of the stage if the `movingObject` is out of bounds
+- add a new function`outOfBoundsDirection` that returns which direction you are out of bounds. this could be something like `N`, `E`, `S`, `W` or `+x`, `-x`, `+y`, `-y`
+- rewrite `outOfBounds` so that it is just a boolean alias of `outOfBoundsDirection`
+- add a `wrap` method which will move the ship to the opposite side of the stage if the `movingObject` is out of bounds
+#### Ship.js
 - call the `wrap` method at the end of the `move` method
 #### finish up
 - refresh your browser
