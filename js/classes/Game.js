@@ -6,7 +6,7 @@ import Vec2 from 'classes/Vec2.js'
 
 const { requestAnimationFrame } = window
 
-const MIN_ASTEROIDS = 100
+const MIN_ASTEROIDS = 10
 
 export default class Game {
     constructor () {
@@ -18,6 +18,15 @@ export default class Game {
         })
         this.tick = this.tick.bind(this)
         this.bindHandlers()
+    }
+
+    start () {
+        this.running = true
+        this.tick()
+    }
+
+    stop () {
+        this.running = false
     }
 
     move () {
@@ -44,22 +53,31 @@ export default class Game {
     }
 
     checkCollisions () {
-        this.bullets.forEach(bullet => {
-            this.asteroids.forEach(asteroid => {
-                if (!bullet.isCollidedWith(asteroid)) { return }
+        this.asteroids.forEach(asteroid => {
+            if (asteroid.isCollidedWith(this.ship)) {
+                this.ship.hit = true
+            }
 
-                bullet.hit = true
+            const collidedBullet = this.bullets.find(bullet => asteroid.isCollidedWith(bullet))
+
+            if (collidedBullet) {
+                collidedBullet.hit = true
                 asteroid.hit = true
-            })
+            }
         })
     }
 
     handleCollisions () {
         this.asteroids = this.asteroids.filter(asteroid => !asteroid.hit)
         this.bullets = this.bullets.filter(bullet => !bullet.hit)
+        if (this.ship.hit) {
+            this.stop()
+        }
     }
 
     tick () {
+        if (!this.running) { return }
+
         Canvas.clear()
 
         this.repopulateAsteroids()

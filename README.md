@@ -376,11 +376,13 @@
 
 ## Add Ship/Asteroid collisions (and the end of the game)!
 #### Game.js
-- in the `start` method, flag `this` as `running` (`this.running = true`)
+- add a `start` method, flag `this` as `running` (`this.running = true`)
 - in your `tick` method, return early if the `running` flag is not `truthy`
 - add a `stop` method which will turn off the `running` flag
 - in `checkCollisions`, check whether or not any `asteroids` have collided with your ship, flag the ship if it was hit
 - in `handleCollisions`, call `stop` if the ship was hit
+#### note
+- this may be a good time to revisit your bullet speed, asteroid max speed, number of asteroids, etc...
 #### finish up
 - refresh your browser
 - the game should stop when you run into an asteroid (you can make this fancier later)
