@@ -1,12 +1,37 @@
 # Step by Step ESNext Asteroids
 
+## Table of contents
+1. [Goals](#goals)
+1. [Prep your project files](#prep-your-project-files)
+1. [Draw a circle](#draw-a-circle)
+1. [Get your circle moving (less handholdy)](#get-your-circle-moving-less-handholdy)
+1. [Make several circles fly around](#make-several-circles-fly-around)
+1. [[Interlude] Add in a linter](#interlude-add-in-a-linter)
+1. [Maintain a minimum number of asteroids flying around](#maintain-a-minimum-number-of-asteroids-flying-around)
+1. [Make the asteroids enter from the side](#make-the-asteroids-enter-from-the-side)
+1. [[Interlude] Fix the favicon error](#interlude-fix-the-favicon-error)
+1. [Add a ship!!!](#add-a-ship)
+1. [[Interlude] Add Webpack](#interlude-add-webpack)
+1. [Make the ship fly!!!](#make-the-ship-fly)
+1. [Make the ship wrap around the screen](#make-the-ship-wrap-around-the-screen)
+1. [[refactor] Create Vec2 class](#refactor-create-vec2-class)
+1. [Add Bullets!](#add-bullets)
+1. [Add Bullet/Asteroid collisions!](#add-bulletasteroid-collisions)
+1. [Add Ship/Asteroid collisions (and the end of the game)!](#add-shipasteroid-collisions-and-the-end-of-the-game)
+1. [Make the Asteroids break up](#make-the-asteroids-break-up)
+1. [Deploy it so you can show it off!](#deploy-it-so-you-can-show-it-off)
+1. [Additional Ideas](#additional-ideas)
+
+
 ## Goals
-- teach a super basic game architecture
+- teach super basic game architecture
+- teach some fancy new javascript stuff
+- teach how to start a frontend project from scratch
 - introduce webpack
 - introduce dev assistance tools (eslint, editorconfig, html-boilerplate)
 - have fun :)
 
-## Prep your project files:
+## Prep your project files
 ### terminal
 - `mkdir asteroids`
 - `cd asteroids`
@@ -61,7 +86,7 @@
 - run `git init` and commit your initial commit
 
 
-## Draw a circle:
+## Draw a circle
 ### index.html
 - add this `canvas` element to the body of your html
   ```html
@@ -121,7 +146,7 @@
 - commit your work
 
 
-## Get your circle moving: (less handholdy)
+## Get your circle moving (less handholdy)
 ### terminal
 - `mkdir js/classes`
 - `touch js/classes/MovingObject.js`
@@ -411,7 +436,7 @@
 - commit your work
 
 
-## Deploy it so you can show off!
+## Deploy it so you can show it off!
 ### Github
 - create a repository if you have not already
 - push your code
