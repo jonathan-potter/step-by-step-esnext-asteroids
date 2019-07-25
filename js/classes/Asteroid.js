@@ -2,15 +2,21 @@ import MovingObject from 'classes/MovingObject.js'
 import times from 'lodash/times'
 import Vec2 from 'classes/Vec2.js'
 
-const { cos, PI: pi, random, sin } = Math
+const { PI: pi, random } = Math
 
+const ASTEROID_RADIUS = 20
 const MAX_SPEED = 1
 
 export default class Asteroid extends MovingObject {
-    constructor ({ generation = 1 }) {
+    constructor ({ generation = 1, radius = ASTEROID_RADIUS }) {
         super(...arguments)
 
         this.generation = generation
+
+        this.points = Vec2.randomPointsInAnnulus({
+            outerRadius: radius,
+            innerRadius: radius / 2,
+        })
     }
 
     handleCollision () {
@@ -23,9 +29,9 @@ export default class Asteroid extends MovingObject {
 
             return new Asteroid({
                 ...this,
-                velocity: new Vec2({
-                    x: MAX_SPEED * cos(direction),
-                    y: MAX_SPEED * sin(direction),
+                velocity: Vec2.fromArgumentAndMagnitude({
+                    argument: direction,
+                    magnitude: MAX_SPEED,
                 }),
                 radius: this.radius / 2,
                 generation: this.generation + 1,
@@ -41,9 +47,9 @@ export default class Asteroid extends MovingObject {
 
         const direction = 2 * pi * random()
         const speed = MAX_SPEED * random()
-        const velocity = new Vec2({
-            x: speed * cos(direction),
-            y: speed * sin(direction),
+        const velocity = Vec2.fromArgumentAndMagnitude({
+            argument: direction,
+            magnitude: speed,
         })
 
         return new Asteroid({

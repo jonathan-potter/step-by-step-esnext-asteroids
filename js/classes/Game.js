@@ -59,7 +59,7 @@ export default class Game {
                 this.ship.hit = true
             }
 
-            const collidedBullet = this.bullets.find(bullet => asteroid.isCollidedWith(bullet))
+            const collidedBullet = this.bullets.find(bullet => !bullet.hit && asteroid.isCollidedWith(bullet))
 
             if (collidedBullet) {
                 collidedBullet.hit = true

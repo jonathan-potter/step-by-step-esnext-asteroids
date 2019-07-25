@@ -1,24 +1,57 @@
 import Canvas from 'utility/Canvas.js'
-import Vec2 from 'classes/Vec2.js'
+import first from 'lodash/first'
+import { getIntersectionRatioOnSegment1 } from 'utility/Math.js'
+import last from 'lodash/last'
+
+const { random } = Math
 
 export default class MovingObject {
-    constructor ({ position, velocity, radius = 20, color = 'white' }) {
+    constructor ({ position, velocity, radius = 20, color = 'white', points }) {
         this.position = position
         this.velocity = velocity
         this.radius = radius
-        this.color = color
+        this.color = color,
+        // TODO: remove when Bullet class is created
+        this.omega = 0.03 * (random() - 0.5) // angular velocity
+        this.direction = random()
+        this.points = points
+    }
+
+    transformPoints (points) {
+        return points
+            .map(point => point.rotate(this.direction))
+            .map(point => point.add(this.position))
+    }
+
+    getSegments () {
+        const points = this.transformPoints(this.points)
+
+        const segments = [
+            [
+                first(points),
+                last(points),
+            ],
+        ]
+
+        for (let i = 1; i < points.length; i++) {
+            segments.push([
+                points[i - 0],
+                points[i - 1],
+            ])
+        }
+
+        return segments
     }
 
     move () {
+        this.direction += this.omega
         this.position = this.position.add(this.velocity)
     }
 
     draw () {
-        Canvas.drawCircle({
-            x: this.position.x,
-            y: this.position.y,
-            radius: this.radius,
-            color: this.color,
+        Canvas.drawPoints({
+            ...this,
+            points: this.transformPoints(this.points),
         })
     }
 
@@ -44,9 +77,21 @@ export default class MovingObject {
     }
 
     isCollidedWith (otherObject) {
-        const distance = Vec2.distance(this.position, otherObject.position)
+        let ourSegments = this.getSegments()
+        let theirSegments = otherObject.getSegments()
 
-        return distance < this.radius + otherObject.radius
+        return ourSegments.find(ourSegment => theirSegments.find(theirSegment => {
+            return getIntersectionRatioOnSegment1(
+                ourSegment[0].x,
+                ourSegment[0].y,
+                ourSegment[1].x,
+                ourSegment[1].y,
+                theirSegment[0].x,
+                theirSegment[0].y,
+                theirSegment[1].x,
+                theirSegment[1].y,
+            )
+        }))
     }
 
     handleCollision () {
