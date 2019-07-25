@@ -1,3 +1,5 @@
+import clamp from 'lodash/clamp'
+
 const { cos, hypot, PI: pi, random, sin } = Math
 
 export default class Vec2 {
@@ -73,7 +75,7 @@ export default class Vec2 {
                 argument: angle,
             }))
 
-            angle += random()
+            angle += clamp(random(), 0.1, 1)
         }
 
         return points
