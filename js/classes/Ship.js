@@ -1,3 +1,4 @@
+import Bullet from 'classes/Bullet.js'
 import Canvas from 'utility/Canvas.js'
 import key from 'keymaster'
 import MovingObject from 'classes/MovingObject.js'
@@ -9,9 +10,6 @@ const INITIAL_DIRECTION = -pi / 2 // up
 const SHIP_COLOR = 'white'
 const SHIP_RADIUS = 10
 const ACCELERATION_CONSTANT = 0.1
-const BULLET_SPEED = 8
-const BULLET_RADIUS = 4
-const BULLET_COLOR = '#f44'
 const POINTS = [
     Vec2.fromArgumentAndMagnitude({ argument:  0 / 10 * pi, magnitude: SHIP_RADIUS }),
     Vec2.fromArgumentAndMagnitude({ argument:  8 / 10 * pi, magnitude: SHIP_RADIUS }),
@@ -32,8 +30,8 @@ export default class Ship extends MovingObject {
     constructor () {
         super(...arguments)
 
-        this.direction = INITIAL_DIRECTION
         this.color = SHIP_COLOR
+        this.direction = INITIAL_DIRECTION
         this.points = POINTS
     }
 
@@ -78,19 +76,9 @@ export default class Ship extends MovingObject {
     }
 
     shoot () {
-        // TODO: make a Bullet class to handle some of this
-        return new MovingObject({
+        return new Bullet({
             position: this.frontPosition,
-            velocity: Vec2.fromArgumentAndMagnitude({
-                argument: this.direction,
-                magnitude: BULLET_SPEED,
-            }),
-            radius: BULLET_RADIUS,
-            color: BULLET_COLOR,
-            points: Vec2.pointsOnACircle({
-                radius: BULLET_RADIUS,
-                numPoints: 8,
-            }),
+            direction: this.direction,
         })
     }
 

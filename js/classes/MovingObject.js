@@ -3,18 +3,13 @@ import first from 'lodash/first'
 import { getIntersectionRatioOnSegment1 } from 'utility/Math.js'
 import last from 'lodash/last'
 
-const { random } = Math
-
 export default class MovingObject {
-    constructor ({ position, velocity, radius = 20, color = 'white', points }) {
+    constructor ({ position, velocity, radius = 20, color = 'white' }) {
+        this.color = color
+        this.omega = 0
         this.position = position
-        this.velocity = velocity
         this.radius = radius
-        this.color = color,
-        // TODO: remove when Bullet class is created
-        this.omega = 0.03 * (random() - 0.5) // angular velocity
-        this.direction = random()
-        this.points = points
+        this.velocity = velocity
     }
 
     transformPoints (points) {
@@ -68,6 +63,7 @@ export default class MovingObject {
 
     wrap () {
         const direction = this.outOfBoundsDirection()
+
         if (!direction) { return }
 
         if (direction === 'N') { return this.position.y += 500 + this.radius * 2 }

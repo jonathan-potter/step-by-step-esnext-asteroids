@@ -11,8 +11,9 @@ export default class Asteroid extends MovingObject {
     constructor ({ generation = 1, radius = ASTEROID_RADIUS }) {
         super(...arguments)
 
+        this.direction = random()
         this.generation = generation
-
+        this.omega = 0.03 * (random() - 0.5) // angular velocity
         this.points = Vec2.randomPointsInAnnulus({
             outerRadius: radius,
             innerRadius: radius / 2,
