@@ -1,7 +1,7 @@
 const { cos, hypot, PI: pi, random, sin } = Math
 
 export default class Vec2 {
-    constructor ({ x = 0, y = 0 }) {
+    constructor ({ x = 0, y = 0 } = {}) {
         this.x = x
         this.y = y
     }
@@ -79,3 +79,5 @@ export default class Vec2 {
         return points
     }
 }
+
+export const NULL_VECTOR = new Vec2()

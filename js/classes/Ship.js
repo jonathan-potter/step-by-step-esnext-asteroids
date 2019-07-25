@@ -2,7 +2,7 @@ import Bullet from 'classes/Bullet.js'
 import Canvas from 'utility/Canvas.js'
 import key from 'keymaster'
 import MovingObject from 'classes/MovingObject.js'
-import Vec2 from 'classes/Vec2.js'
+import Vec2, { NULL_VECTOR } from 'classes/Vec2.js'
 
 const { abs, PI: pi, sin } = Math
 
@@ -33,12 +33,14 @@ export default class Ship extends MovingObject {
         this.color = SHIP_COLOR
         this.direction = INITIAL_DIRECTION
         this.points = POINTS
+        this.position = new Vec2({ x: 250, y: 250 })
+        this.velocity = NULL_VECTOR
     }
 
     draw () {
         this.drawThrust()
         Canvas.drawPoints({
-            ...this,
+            color: this.color,
             points: this.transformPoints(this.points),
         })
     }
@@ -52,18 +54,16 @@ export default class Ship extends MovingObject {
             .add(thrustPoints[0].scale(2 * abs(sin(performance.now() / 45))))
 
         Canvas.drawPoints({
-            ...this,
-            points: this.transformPoints(thrustPoints),
             color: INNER_THRUST_COLOR,
+            points: this.transformPoints(thrustPoints),
         })
 
         thrustPoints[2] = thrustPoints[0]
             .add(thrustPoints[2].scale(1.5 * abs(sin(performance.now() / 75))))
 
         Canvas.drawPoints({
-            ...this,
-            points: this.transformPoints(thrustPoints),
             color: OUTER_THRUST_COLOR,
+            points: this.transformPoints(thrustPoints),
         })
     }
 
@@ -89,7 +89,7 @@ export default class Ship extends MovingObject {
     }
 
     get acceleration () {
-        if (!key.isPressed('up')) { return { x: 0, y: 0 } }
+        if (!key.isPressed('up')) { return NULL_VECTOR }
 
         return Vec2.fromArgumentAndMagnitude({
             argument: this.direction,

@@ -3,7 +3,6 @@ import Canvas from 'utility/Canvas.js'
 import flatten from 'lodash/flatten'
 import key from 'keymaster'
 import Ship from 'classes/Ship.js'
-import Vec2 from 'classes/Vec2.js'
 
 const { requestAnimationFrame } = window
 
@@ -13,10 +12,7 @@ export default class Game {
     constructor () {
         this.asteroids = []
         this.bullets = []
-        this.ship = new Ship({
-            position: new Vec2({ x: 250, y: 250 }),
-            velocity: new Vec2({ x: 0,   y: 0   }),
-        })
+        this.ship = new Ship()
         this.tick = this.tick.bind(this)
         this.bindHandlers()
     }
