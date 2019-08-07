@@ -1,5 +1,7 @@
 import Asteroid from 'classes/Asteroid.js'
+import Bullet from 'classes/Bullet.js'
 import Canvas from 'utility/Canvas.js'
+import Debris from 'classes/Debris.js'
 import flatten from 'lodash/flatten'
 import key from 'keymaster'
 import Ship from 'classes/Ship.js'
@@ -12,6 +14,7 @@ export default class Game {
     constructor () {
         this.asteroids = []
         this.bullets = []
+        this.debris = []
         this.ship = new Ship()
         this.tick = this.tick.bind(this)
         this.bindHandlers()
@@ -29,12 +32,14 @@ export default class Game {
     move () {
         this.asteroids.forEach(asteroid => asteroid.move())
         this.bullets.forEach(bullet => bullet.move())
+        this.debris.forEach(debris => debris.move())
         this.ship.move()
     }
 
     draw () {
         this.asteroids.forEach(asteroid => asteroid.draw())
         this.bullets.forEach(bullet => bullet.draw())
+        this.debris.forEach(debris => debris.draw())
         this.ship.draw()
     }
 
@@ -65,10 +70,22 @@ export default class Game {
     }
 
     handleCollisions () {
-        this.asteroids = flatten(this.asteroids.map(asteroid => asteroid.handleCollision()).filter(Boolean))
-        this.bullets = flatten(this.bullets.map(bullet => bullet.handleCollision()).filter(Boolean))
+        const movingObjects = flatten([
+            ...this.asteroids.map(asteroid => asteroid.handleCollision()),
+            ...this.bullets.map(bullet => bullet.handleCollision()),
+        ]).filter(Boolean)
+
+        this.asteroids = movingObjects.filter(movingObject => movingObject instanceof Asteroid)
+        this.bullets = movingObjects.filter(movingObject => movingObject instanceof Bullet)
+        this.debris = this.debris.concat(
+            movingObjects.filter(movingObject => movingObject instanceof Debris)
+        )
 
         if (this.ship.hit) { this.stop() }
+    }
+
+    cullDebris () {
+        this.debris = this.debris.filter(debris => debris.alive())
     }
 
     tick () {
@@ -76,6 +93,7 @@ export default class Game {
 
         Canvas.clear()
 
+        this.cullDebris()
         this.repopulateAsteroids()
         this.move()
         this.checkCollisions()

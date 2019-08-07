@@ -4,8 +4,9 @@ import { getIntersectionRatioOnSegment1 } from 'utility/Math.js'
 import last from 'lodash/last'
 
 export default class MovingObject {
-    constructor ({ position, velocity, radius = 20, color = 'white' } = {}) {
+    constructor ({ direction = 0, position, velocity, radius = 20, color = 'white' } = {}) {
         this.color = color
+        this.direction = direction
         this.omega = 0
         this.position = position
         this.radius = radius

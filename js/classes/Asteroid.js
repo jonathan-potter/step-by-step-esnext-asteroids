@@ -1,3 +1,4 @@
+import Debris from 'classes/Debris.js'
 import MovingObject from 'classes/MovingObject.js'
 import times from 'lodash/times'
 import Vec2 from 'classes/Vec2.js'
@@ -11,7 +12,7 @@ export default class Asteroid extends MovingObject {
     constructor ({ generation = 1, radius = ASTEROID_RADIUS }) {
         super(...arguments)
 
-        this.direction = random()
+        this.direction = 0
         this.generation = generation
         this.omega = 0.03 * (random() - 0.5) // angular velocity
         this.points = Vec2.randomPointsInAnnulus({
@@ -23,9 +24,23 @@ export default class Asteroid extends MovingObject {
     handleCollision () {
         if (!this.hit) { return this }
 
-        if (this.generation >= 3) { return }
+        // asteroid falls apart
+        const debris = this.getSegments().map(segment => {
+            const first = this.position.subtract(segment[0])
+            const last = this.position.subtract(segment[1])
 
-        return times(3, () => {
+            const velocity = first.add(last).scale(0.1)
+
+            return new Debris({
+                segment,
+                velocity,
+            })
+        })
+
+        if (this.generation >= 3) { return debris }
+
+        // three smaller asteroids
+        return debris.concat(times(3, () => {
             const direction = 2 * pi * random()
 
             return new Asteroid({
@@ -37,7 +52,7 @@ export default class Asteroid extends MovingObject {
                 radius: this.radius / 2,
                 generation: this.generation + 1,
             })
-        })
+        }))
     }
 
     static createRandom () {

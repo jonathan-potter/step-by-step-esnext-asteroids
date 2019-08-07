@@ -51,7 +51,7 @@ export default class Ship extends MovingObject {
         const thrustPoints = [...THRUST_POINTS]
 
         thrustPoints[2] = thrustPoints[0]
-            .add(thrustPoints[0].scale(2 * abs(sin(performance.now() / 45))))
+            .add(thrustPoints[0].scale(2 * abs(sin(Date.now() / 45))))
 
         Canvas.drawPoints({
             color: INNER_THRUST_COLOR,
@@ -59,7 +59,7 @@ export default class Ship extends MovingObject {
         })
 
         thrustPoints[2] = thrustPoints[0]
-            .add(thrustPoints[2].scale(1.5 * abs(sin(performance.now() / 75))))
+            .add(thrustPoints[2].scale(1.5 * abs(sin(Date.now() / 75))))
 
         Canvas.drawPoints({
             color: OUTER_THRUST_COLOR,

@@ -19,8 +19,9 @@ export default {
         context.stroke()
     },
 
-    drawPoints ({ points, color = 'white', lineWidth = 2 }) {
+    drawPoints ({ alpha = 1, points, color = 'white', lineWidth = 2 }) {
         context.beginPath()
+        context.globalAlpha = alpha
         context.lineWidth = lineWidth
         context.strokeStyle = color
 
