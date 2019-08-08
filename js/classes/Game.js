@@ -13,19 +13,23 @@ const DEATH_TIMER = 1000
 
 export default class Game {
     constructor () {
+        this.subscriptions = []
+        this.tick = this.tick.bind(this)
+        this.bindHandlers()
+    }
+
+    reset () {
         this.asteroids = []
         this.bullets = []
         this.debris = []
         this.extraLives = STARTING_LIVES
         this.points = 0
         this.ship = new Ship()
-        this.subscriptions = []
-        this.tick = this.tick.bind(this)
-        this.bindHandlers()
     }
 
     start () {
         this.running = true
+        this.reset()
         this.tick()
     }
 
@@ -110,6 +114,8 @@ export default class Game {
     }
 
     tick () {
+        this.executeSubscriptions()
+
         if (!this.running) { return }
 
         Canvas.clear()
@@ -121,7 +127,6 @@ export default class Game {
         this.handleCollisions()
         this.removeOutOfBounds()
         this.draw()
-        this.executeSubscriptions()
 
         requestAnimationFrame(this.tick)
     }
