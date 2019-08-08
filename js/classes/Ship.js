@@ -1,5 +1,6 @@
 import Bullet from 'classes/Bullet.js'
 import Canvas from 'utility/Canvas.js'
+import clamp from 'lodash/clamp'
 import key from 'keymaster'
 import MovingObject from 'classes/MovingObject.js'
 import Vec2, { NULL_VECTOR } from 'classes/Vec2.js'
@@ -10,7 +11,7 @@ const INITIAL_DIRECTION = -pi / 2 // up
 const SHIP_COLOR = 'white'
 const SHIP_RADIUS = 10
 const ACCELERATION_CONSTANT = 0.1
-const INVULNERABILITY_TIME = 3000
+const INVULNERABILITY_TIME = 2000
 const POINTS = [
     Vec2.fromArgumentAndMagnitude({ argument:  0 / 10 * pi, magnitude: SHIP_RADIUS }),
     Vec2.fromArgumentAndMagnitude({ argument:  8 / 10 * pi, magnitude: SHIP_RADIUS }),
@@ -39,11 +40,14 @@ export default class Ship extends MovingObject {
         this.velocity = NULL_VECTOR
     }
 
-    draw () {
-        if (this.invulnerable && sin(this.age / 80) < 0) { return }
+    get alpha () {
+        return this.invulnerable ? (1 + sin(this.age / 80)) / 2 : 1
+    }
 
+    draw () {
         this.drawThrust()
         Canvas.drawPoints({
+            alpha: this.alpha,
             color: this.color,
             points: this.transformPoints(this.points),
         })
@@ -58,6 +62,7 @@ export default class Ship extends MovingObject {
             .add(thrustPoints[0].scale(2 * abs(sin(Date.now() / 45))))
 
         Canvas.drawPoints({
+            alpha: this.alpha,
             color: INNER_THRUST_COLOR,
             points: this.transformPoints(thrustPoints),
         })
@@ -66,6 +71,7 @@ export default class Ship extends MovingObject {
             .add(thrustPoints[2].scale(1.5 * abs(sin(Date.now() / 75))))
 
         Canvas.drawPoints({
+            alpha: this.alpha,
             color: OUTER_THRUST_COLOR,
             points: this.transformPoints(thrustPoints),
         })
