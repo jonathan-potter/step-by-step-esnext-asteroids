@@ -2,7 +2,6 @@ import Asteroid from 'classes/Asteroid.js'
 import Bullet from 'classes/Bullet.js'
 import Canvas from 'utility/Canvas.js'
 import Debris from 'classes/Debris.js'
-import flatten from 'lodash/flatten'
 import key from 'keymaster'
 import Ship from 'classes/Ship.js'
 
@@ -58,6 +57,7 @@ export default class Game {
         this.asteroids.forEach(asteroid => {
             if (asteroid.isCollidedWith(this.ship)) {
                 this.ship.hit = true
+                asteroid.hit = true
             }
 
             const collidedBullet = this.bullets.find(bullet => !bullet.hit && asteroid.isCollidedWith(bullet))
@@ -70,18 +70,20 @@ export default class Game {
     }
 
     handleCollisions () {
-        const movingObjects = flatten([
-            ...this.asteroids.map(asteroid => asteroid.handleCollision()),
-            ...this.bullets.map(bullet => bullet.handleCollision()),
-        ]).filter(Boolean)
+        const movingObjects = [
+            ...this.asteroids,
+            ...this.bullets,
+            this.ship,
+        ].map(movingObject => movingObject.handleCollision()).flat()
 
         this.asteroids = movingObjects.filter(movingObject => movingObject instanceof Asteroid)
         this.bullets = movingObjects.filter(movingObject => movingObject instanceof Bullet)
-        this.debris = this.debris.concat(
-            movingObjects.filter(movingObject => movingObject instanceof Debris)
-        )
+        this.debris = movingObjects.filter(movingObject => movingObject instanceof Debris).concat(this.debris)
+        this.ship = movingObjects.find(movingObject => movingObject instanceof Ship)
 
-        if (this.ship.hit) { this.stop() }
+        if (!this.ship) {
+            this.ship = new Ship()
+        }
     }
 
     cullDebris () {

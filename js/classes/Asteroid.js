@@ -1,4 +1,3 @@
-import Debris from 'classes/Debris.js'
 import MovingObject from 'classes/MovingObject.js'
 import times from 'lodash/times'
 import Vec2 from 'classes/Vec2.js'
@@ -25,17 +24,7 @@ export default class Asteroid extends MovingObject {
         if (!this.hit) { return this }
 
         // asteroid falls apart
-        const debris = this.getSegments().map(segment => {
-            const first = this.position.subtract(segment[0])
-            const last = this.position.subtract(segment[1])
-
-            const velocity = first.add(last).scale(0.1)
-
-            return new Debris({
-                segment,
-                velocity,
-            })
-        })
+        const debris = this.breakApart()
 
         if (this.generation >= 3) { return debris }
 
