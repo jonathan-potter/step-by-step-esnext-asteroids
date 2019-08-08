@@ -14,7 +14,6 @@ export default class Bullet extends MovingObject {
         super(...arguments)
 
         this.color = BULLET_COLOR
-        this.direction = direction
         this.points = BULLET_POINTS
         this.radius = BULLET_RADIUS
         this.velocity = Vec2.fromArgumentAndMagnitude({

@@ -1,11 +1,13 @@
 import Canvas from 'utility/Canvas.js'
+import Debris from 'classes/Debris.js'
 import first from 'lodash/first'
 import { getIntersectionRatioOnSegment1 } from 'utility/Math.js'
 import last from 'lodash/last'
 
 export default class MovingObject {
-    constructor ({ position, velocity, radius = 20, color = 'white' } = {}) {
+    constructor ({ direction = 0, position, velocity, radius = 20, color = 'white' } = {}) {
         this.color = color
+        this.direction = direction
         this.omega = 0
         this.position = position
         this.radius = radius
@@ -93,6 +95,24 @@ export default class MovingObject {
     handleCollision () {
         if (!this.hit) { return this }
 
-        return
+        return this.breakApart()
+    }
+
+    breakApart () {
+        return this.getSegments().map(segment => {
+            const start = this.position.subtract(segment[0])
+            const end = this.position.subtract(segment[1])
+
+            const velocity = start
+                .add(end)
+                .scale(0.1)
+                .add(this.velocity.scale(.3))
+
+            return new Debris({
+                segment,
+                velocity,
+                color: this.color,
+            })
+        })
     }
 }
