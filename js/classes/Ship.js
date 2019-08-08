@@ -10,6 +10,7 @@ const INITIAL_DIRECTION = -pi / 2 // up
 const SHIP_COLOR = 'white'
 const SHIP_RADIUS = 10
 const ACCELERATION_CONSTANT = 0.1
+const INVULNERABILITY_TIME = 3000
 const POINTS = [
     Vec2.fromArgumentAndMagnitude({ argument:  0 / 10 * pi, magnitude: SHIP_RADIUS }),
     Vec2.fromArgumentAndMagnitude({ argument:  8 / 10 * pi, magnitude: SHIP_RADIUS }),
@@ -31,6 +32,7 @@ export default class Ship extends MovingObject {
         super(...arguments)
 
         this.color = SHIP_COLOR
+        this.creation = Date.now()
         this.direction = INITIAL_DIRECTION
         this.points = POINTS
         this.position = new Vec2({ x: 250, y: 250 })
@@ -38,6 +40,8 @@ export default class Ship extends MovingObject {
     }
 
     draw () {
+        if (this.invulnerable && sin(this.age / 80) < 0) { return }
+
         this.drawThrust()
         Canvas.drawPoints({
             color: this.color,
@@ -65,6 +69,14 @@ export default class Ship extends MovingObject {
             color: OUTER_THRUST_COLOR,
             points: this.transformPoints(thrustPoints),
         })
+    }
+
+    get age () {
+        return Date.now() - this.creation
+    }
+
+    get invulnerable () {
+        return this.age < INVULNERABILITY_TIME
     }
 
     move () {

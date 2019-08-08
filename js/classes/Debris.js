@@ -10,10 +10,10 @@ export default class Debris extends MovingObject {
     constructor ({ segment }) {
         super(...arguments)
 
+        this.creation = Date.now()
         this.omega = 0.2 * random()
         this.position = segment[0].add(segment[1]).scale(0.5)
         this.points = segment.map(point => point.subtract(this.position))
-        this.creation = Date.now()
     }
 
     get age () {

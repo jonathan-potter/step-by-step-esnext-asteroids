@@ -64,7 +64,7 @@ export default class Game {
 
     checkCollisions () {
         this.asteroids.forEach(asteroid => {
-            if (this.ship && asteroid.isCollidedWith(this.ship)) {
+            if (this.ship && !this.ship.invulnerable && asteroid.isCollidedWith(this.ship)) {
                 this.ship.hit = true
                 asteroid.hit = true
             }
