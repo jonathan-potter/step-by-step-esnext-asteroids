@@ -8,13 +8,17 @@ import Ship from 'classes/Ship.js'
 const { requestAnimationFrame } = window
 
 const MIN_ASTEROIDS = 5
+const STARTING_LIVES = 2
+const DEATH_TIMER = 1000
 
 export default class Game {
     constructor () {
         this.asteroids = []
         this.bullets = []
         this.debris = []
+        this.extraLives = STARTING_LIVES
         this.ship = new Ship()
+        this.subscriptions = []
         this.tick = this.tick.bind(this)
         this.bindHandlers()
     }
@@ -24,22 +28,22 @@ export default class Game {
         this.tick()
     }
 
-    stop () {
-        this.running = false
+    gameOver () {
+        setTimeout(() => this.running = false, DEATH_TIMER)
     }
 
     move () {
         this.asteroids.forEach(asteroid => asteroid.move())
         this.bullets.forEach(bullet => bullet.move())
         this.debris.forEach(debris => debris.move())
-        this.ship.move()
+        this.ship && this.ship.move()
     }
 
     draw () {
         this.asteroids.forEach(asteroid => asteroid.draw())
         this.bullets.forEach(bullet => bullet.draw())
         this.debris.forEach(debris => debris.draw())
-        this.ship.draw()
+        this.ship && this.ship.draw()
     }
 
     removeOutOfBounds () {
@@ -55,7 +59,7 @@ export default class Game {
 
     checkCollisions () {
         this.asteroids.forEach(asteroid => {
-            if (asteroid.isCollidedWith(this.ship)) {
+            if (this.ship && asteroid.isCollidedWith(this.ship)) {
                 this.ship.hit = true
                 asteroid.hit = true
             }
@@ -74,20 +78,33 @@ export default class Game {
             ...this.asteroids,
             ...this.bullets,
             this.ship,
-        ].map(movingObject => movingObject.handleCollision()).flat()
+        ].filter(Boolean).map(movingObject => movingObject.handleCollision()).flat()
 
         this.asteroids = movingObjects.filter(movingObject => movingObject instanceof Asteroid)
         this.bullets = movingObjects.filter(movingObject => movingObject instanceof Bullet)
         this.debris = movingObjects.filter(movingObject => movingObject instanceof Debris).concat(this.debris)
         this.ship = movingObjects.find(movingObject => movingObject instanceof Ship)
 
-        if (!this.ship) {
+        if (this.ship) { return }
+
+        if (this.extraLives > 0) {
+            this.extraLives -= 1
             this.ship = new Ship()
+        } else {
+            this.gameOver()
         }
     }
 
     cullDebris () {
         this.debris = this.debris.filter(debris => debris.alive())
+    }
+
+    subscribe (callback) {
+        this.subscriptions.push(callback)
+    }
+
+    executeSubscriptions () {
+        this.subscriptions.forEach(callback => callback ())
     }
 
     tick () {
@@ -102,13 +119,14 @@ export default class Game {
         this.handleCollisions()
         this.removeOutOfBounds()
         this.draw()
+        this.executeSubscriptions()
 
         requestAnimationFrame(this.tick)
     }
 
     bindHandlers () {
         key('space', () => {
-            this.bullets.push(this.ship.shoot())
+            this.ship && this.bullets.push(this.ship.shoot())
         })
     }
 }

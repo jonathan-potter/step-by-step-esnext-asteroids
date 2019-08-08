@@ -21,4 +21,17 @@ canvas {
     width: 500px;
     height: 500px;
     border: 2px solid white;
+    margin: 40px 0 40px 0;
+}
+
+.lives-container {
+    display: flex;
+    position: absolute;
+}
+
+.lives-container > div {
+    width: 40px;
+    height: 40px;
+    margin-right: -20px;
+    background-image: url(../assets/ship.svg);
 }
