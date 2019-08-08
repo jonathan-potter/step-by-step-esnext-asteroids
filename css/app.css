@@ -1,8 +1,10 @@
 /* css reset */
-html, body, canvas {
+html, body, canvas, header, div {
     padding: 0;
     border: 0;
     margin: 0;
+    color: white;
+    font-family: sans-serif;
 }
 
 html, body {
@@ -24,9 +26,15 @@ canvas {
     margin: 40px 0 40px 0;
 }
 
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    width: 500px;
+}
+
 .lives-container {
     display: flex;
-    position: absolute;
 }
 
 .lives-container > div {
@@ -34,4 +42,10 @@ canvas {
     height: 40px;
     margin-right: -20px;
     background-image: url(../assets/ship.svg);
+}
+
+.points-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

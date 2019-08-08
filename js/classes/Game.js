@@ -17,6 +17,7 @@ export default class Game {
         this.bullets = []
         this.debris = []
         this.extraLives = STARTING_LIVES
+        this.points = 0
         this.ship = new Ship()
         this.subscriptions = []
         this.tick = this.tick.bind(this)
@@ -69,6 +70,7 @@ export default class Game {
             if (collidedBullet) {
                 collidedBullet.hit = true
                 asteroid.hit = true
+                this.points += 1
             }
         })
     }
