@@ -1,6 +1,5 @@
 import Bullet from 'classes/Bullet.js'
 import Canvas from 'utility/Canvas.js'
-import clamp from 'lodash/clamp'
 import key from 'keymaster'
 import MovingObject from 'classes/MovingObject.js'
 import Vec2, { NULL_VECTOR } from 'classes/Vec2.js'

@@ -1,5 +1,7 @@
 import 'classes/Debris.js' // resolves circular dependency with MovingObject
+import createTemplate from 'utility/createTemplate'
 import Game from 'classes/Game.js'
+import shipSVG from 'assets/ship.svg'
 import times from 'lodash/times'
 
 let lives, points, running
@@ -8,17 +10,23 @@ const pointsContainer = document.getElementById('points-container')
 const resetOverlay = document.getElementById('reset-overlay')
 const resetButton = document.getElementById('reset-button')
 
-const game = new Game()
+const shipTemplate = createTemplate({ id: 'ship-svg', content: shipSVG })
 
-window.game = game
+const game = new Game()
 
 game.subscribe(() => {
     if (game.extraLives === lives) { return }
     lives = game.extraLives
 
     livesContainer.innerHTML = ''
-    times(lives, () => {
-        livesContainer.appendChild(document.createElement('div'))
+    times(game.STARTING_LIVES, index => {
+        const element = shipTemplate.content.cloneNode(true).firstElementChild
+
+        if (lives > index) {
+            element.classList.add('unused')
+        }
+
+        livesContainer.appendChild(element)
     })
 })
 
