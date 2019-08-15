@@ -1,5 +1,6 @@
 import Asteroid from 'classes/Asteroid.js'
 import Bullet from 'classes/Bullet.js'
+import Background from 'classes/Background.js'
 import Canvas from 'utility/Canvas.js'
 import Debris from 'classes/Debris.js'
 import key from 'keymaster'
@@ -7,9 +8,9 @@ import Ship from 'classes/Ship.js'
 
 const { requestAnimationFrame } = window
 
+const GAME_OVER_DELAY = 1000
 const MIN_ASTEROIDS = 5
 const STARTING_LIVES = 2
-const DEATH_TIMER = 1000
 
 export default class Game {
     constructor () {
@@ -25,6 +26,8 @@ export default class Game {
         this.extraLives = STARTING_LIVES
         this.points = 0
         this.ship = new Ship()
+        this.STARTING_LIVES = STARTING_LIVES
+        this.background = new Background()
     }
 
     start () {
@@ -34,7 +37,7 @@ export default class Game {
     }
 
     gameOver () {
-        setTimeout(() => this.running = false, DEATH_TIMER)
+        setTimeout(() => this.running = false, GAME_OVER_DELAY)
     }
 
     move () {
@@ -45,6 +48,7 @@ export default class Game {
     }
 
     draw () {
+        this.background.draw()
         this.asteroids.forEach(asteroid => asteroid.draw())
         this.bullets.forEach(bullet => bullet.draw())
         this.debris.forEach(debris => debris.draw())

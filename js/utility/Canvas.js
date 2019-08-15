@@ -8,8 +8,9 @@ export default {
         context.clearRect(0, 0, 1e9, 1e9)
     },
 
-    drawCircle ({ x, y, radius, color = 'white', lineWidth = 2 }) {
+    drawCircle ({ alpha = 1, x, y, radius, color = 'white', lineWidth = 2, fill }) {
         context.beginPath()
+        context.globalAlpha = alpha
         context.lineWidth = lineWidth
         context.strokeStyle = color
 
@@ -17,6 +18,10 @@ export default {
 
         context.closePath()
         context.stroke()
+        if (fill) {
+            context.fillStyle = color
+            fill && context.fill()
+        }
     },
 
     drawPoints ({ alpha = 1, points, color = 'white', lineWidth = 2 }) {
