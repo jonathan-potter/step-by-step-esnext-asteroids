@@ -27,7 +27,7 @@ export default class Game {
         this.points = 0
         this.ship = new Ship()
         this.STARTING_LIVES = STARTING_LIVES
-        this.background = new Background()
+        this.background = new Background(this)
     }
 
     start () {

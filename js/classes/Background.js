@@ -1,7 +1,8 @@
 import times from 'lodash/times'
 import Vec2 from 'classes/Vec2.js'
 import * as THREE from 'three'
-import fragmentShader from 'glsl/background.glsl'
+import MovingDots from 'glsl/MovingDots.glsl'
+import Grid from 'glsl/Grid.glsl'
 
 const { PI: pi, random } = Math
 
@@ -26,17 +27,22 @@ const starVelocities = times(STAR_COUNT, () => {
 
 /* eslint-disable indent */
 const uniforms = {
-              time: { value: 0 },
-        resolution: { value: new THREE.Vector3(500, 500) },
-          DOT_SIZE: { value: 4 },
+                time: { value: 0 },
+          resolution: { value: new THREE.Vector3(500, 500) },
+            DOT_SIZE: { value: 4 },
     //   LAYER_COUNTS: { value: [350, 100, 50] },
-     DOT_LOCATIONS: { value: starLocations.map(vector => new THREE.Vector2(vector.x, vector.y)) },
-    DOT_VELOCITIES: { value: starVelocities.map(vector => new THREE.Vector2(vector.x, vector.y)) },
+       DOT_LOCATIONS: { value: starLocations.map(vector => new THREE.Vector2(vector.x, vector.y)) },
+      DOT_VELOCITIES: { value: starVelocities.map(vector => new THREE.Vector2(vector.x, vector.y)) },
+        BULLET_COUNT: { value: 0 },
+    BULLET_LOCATIONS: { value: starLocations.map(vector => new THREE.Vector2(vector.x, vector.y)) },
+       SHIP_LOCATION: { value: new THREE.Vector2(250, 250) },
 }
 /* eslint-enable indent */
 
 export default class Background {
-    constructor () {
+    constructor (game) {
+        this.game = game
+
         const canvas = this.canvas = document.querySelector('#canvas-background')
         this.renderer = new THREE.WebGLRenderer({ canvas })
         this.renderer.autoClearColor = false
@@ -53,9 +59,19 @@ export default class Background {
         /* eslint-enable indent */
 
         const plane = new THREE.PlaneBufferGeometry(2, 2)
-        const material = new THREE.ShaderMaterial({ fragmentShader, uniforms })
+        const material = new THREE.ShaderMaterial({
+            fragmentShader: MovingDots,
+            uniforms,
+            transparent: true,
+        })
+        const gridMaterial = new THREE.ShaderMaterial({
+            fragmentShader: Grid,
+            uniforms,
+            transparent: true,
+        })
         this.scene = new THREE.Scene()
         this.scene.add(new THREE.Mesh(plane, material))
+        this.scene.add(new THREE.Mesh(plane, gridMaterial))
     }
 
     draw (time) {
@@ -64,6 +80,12 @@ export default class Background {
         time *= 0.001 // seconds
 
         uniforms.time.value = time
+        uniforms.BULLET_COUNT.value = this.game.bullets.length
+        uniforms.BULLET_LOCATIONS.value = [
+            ...this.game.bullets.map(({ position }) => new THREE.Vector2(position.x, 500 - position.y)),
+            ...starLocations.map(vector => new THREE.Vector2(vector.x, vector.y)),
+        ]
+        uniforms.SHIP_LOCATION.value = new THREE.Vector2(this.game.ship.position.x, 500 - this.game.ship.position.y)
 
         renderer.render(scene, camera)
     }
