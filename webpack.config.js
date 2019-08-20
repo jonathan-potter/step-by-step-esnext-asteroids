@@ -17,6 +17,7 @@ module.exports = {
         alias: {
             /* eslint-disable key-spacing */
             assets:  path.resolve(__dirname, 'assets'),
+            glsl:    path.resolve(__dirname, 'glsl'),
             js:      path.resolve(__dirname, 'js'),
             classes: path.resolve(__dirname, 'js', 'classes'),
             utility: path.resolve(__dirname, 'js', 'utility'),
@@ -27,6 +28,11 @@ module.exports = {
         rules: [
             {
                 test: /\.svg$/,
+                exclude: /node_modules/,
+                use: 'raw-loader',
+            },
+            {
+                test: /\.glsl$/,
                 exclude: /node_modules/,
                 use: 'raw-loader',
             },

@@ -47,8 +47,8 @@ export default class Game {
         this.ship && this.ship.move()
     }
 
-    draw () {
-        this.background.draw()
+    draw (time) {
+        this.background.draw(time)
         this.asteroids.forEach(asteroid => asteroid.draw())
         this.bullets.forEach(bullet => bullet.draw())
         this.debris.forEach(debris => debris.draw())
@@ -117,7 +117,7 @@ export default class Game {
         this.subscriptions.forEach(callback => callback ())
     }
 
-    tick () {
+    tick (time) {
         this.executeSubscriptions()
 
         if (!this.running) { return }
@@ -130,7 +130,7 @@ export default class Game {
         this.checkCollisions()
         this.handleCollisions()
         this.removeOutOfBounds()
-        this.draw()
+        this.draw(time)
 
         requestAnimationFrame(this.tick)
     }
