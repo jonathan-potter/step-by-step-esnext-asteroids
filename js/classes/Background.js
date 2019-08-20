@@ -12,7 +12,7 @@ const ROTATION_RATE = 10000 // milliseconds
 const starLocations = times(STAR_COUNT, () => new Vec2({
     x: random(),
     y: random(),
-}))
+}).scale(500))
 
 const starVelocities = times(STAR_COUNT, () => {
     const direction = 2 * pi * random()
@@ -21,13 +21,15 @@ const starVelocities = times(STAR_COUNT, () => {
     return Vec2.fromArgumentAndMagnitude({
         argument: direction,
         magnitude: speed,
-    })
+    }).scale(3)
 })
 
 /* eslint-disable indent */
 const uniforms = {
               time: { value: 0 },
         resolution: { value: new THREE.Vector3(500, 500) },
+          DOT_SIZE: { value: 4 },
+    //   LAYER_COUNTS: { value: [350, 100, 50] },
      DOT_LOCATIONS: { value: starLocations.map(vector => new THREE.Vector2(vector.x, vector.y)) },
     DOT_VELOCITIES: { value: starVelocities.map(vector => new THREE.Vector2(vector.x, vector.y)) },
 }
@@ -50,10 +52,10 @@ export default class Background {
         )
         /* eslint-enable indent */
 
-        this.plane = new THREE.PlaneBufferGeometry(2, 2)
-        this.material = new THREE.ShaderMaterial({ fragmentShader, uniforms })
+        const plane = new THREE.PlaneBufferGeometry(2, 2)
+        const material = new THREE.ShaderMaterial({ fragmentShader, uniforms })
         this.scene = new THREE.Scene()
-        this.scene.add(new THREE.Mesh(this.plane, this.material))
+        this.scene.add(new THREE.Mesh(plane, material))
     }
 
     draw (time) {

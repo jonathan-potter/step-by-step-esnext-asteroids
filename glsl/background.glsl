@@ -1,23 +1,20 @@
 #include <common>
 
+const int DOT_COUNT = 500;
+
 uniform vec3 resolution;
 uniform float time;
-uniform vec2 DOT_LOCATIONS[500];
-uniform vec2 DOT_VELOCITIES[500];
+uniform float DOT_SIZE;
+uniform vec2 DOT_LOCATIONS[DOT_COUNT];
+uniform vec2 DOT_VELOCITIES[DOT_COUNT];
 
-#define COLOR 0.2, 0.2, 0.2
-
-// vec2 dotLocation ( int index ) {
-//     return DOT_LOCATIONS[index] + DOT_VELOCITIES[index] * time;
-// }
-
-float hitCount ( vec2 uv ) {
+float hitCount ( vec2 location ) {
     float hitCount = 0.0;
 
-    for (int i = 0; i < 500; i++) {
-        vec2 location = mod(DOT_LOCATIONS[i] + DOT_VELOCITIES[i] * time, 1.0);
+    for (int i = 0; i < DOT_COUNT; i++) {
+        vec2 dotPosition = mod(DOT_LOCATIONS[i] + DOT_VELOCITIES[i] * time, 500.0);
 
-        if (length(uv - location) < .01) {
+        if (length(location - dotPosition) < DOT_SIZE) {
             hitCount += 1.0;
 		}
 	}
@@ -25,15 +22,10 @@ float hitCount ( vec2 uv ) {
     return hitCount;
 }
 
-void mainImage( out vec4 fragColor, in vec2 fragCoord ) {
-    // Normalized pixel coordinates (from 0 to 1)
-    vec2 uv = fragCoord / resolution.xy;
-
-    float color = .2 * hitCount(uv);
-
-    fragColor = vec4(color, color, color, 1.0);
-}
-
 void main() {
-    mainImage(gl_FragColor, gl_FragCoord.xy);
+    vec2 location = gl_FragCoord.xy;
+
+    float color = 0.1 * hitCount(location);
+
+    gl_FragColor = vec4(color, color, color, 1.0);
 }
