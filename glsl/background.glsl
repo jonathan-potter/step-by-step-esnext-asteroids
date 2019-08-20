@@ -14,7 +14,8 @@ float hitCount ( vec2 location ) {
     for (int i = 0; i < DOT_COUNT; i++) {
         vec2 dotPosition = mod(DOT_LOCATIONS[i] + DOT_VELOCITIES[i] * time, 500.0);
 
-        if (length(location - dotPosition) < DOT_SIZE) {
+        float dotSize = DOT_SIZE / (mod(float(i), 3.0) + 1.0);
+        if (length(location - dotPosition) < dotSize) {
             hitCount += 1.0;
 		}
 	}

@@ -21,7 +21,7 @@ const starVelocities = times(STAR_COUNT, () => {
     return Vec2.fromArgumentAndMagnitude({
         argument: direction,
         magnitude: speed,
-    }).scale(3)
+    }).scale(50)
 })
 
 /* eslint-disable indent */
