@@ -6,16 +6,14 @@ import Grid from 'glsl/Grid.glsl'
 
 const { PI: pi, random } = Math
 
-const STAR_COUNT = 500
-const LAYERS = 3
-const ROTATION_RATE = 10000 // milliseconds
+const DOT_COUNT = 500
 
-const starLocations = times(STAR_COUNT, () => new Vec2({
+const starLocations = times(DOT_COUNT, () => new Vec2({
     x: random(),
     y: random(),
-}).scale(500))
+}).scale(500)).map(vector => new THREE.Vector2(vector.x, vector.y))
 
-const starVelocities = times(STAR_COUNT, () => {
+const starVelocities = times(DOT_COUNT, () => {
     const direction = 2 * pi * random()
     const speed = random()
 
@@ -23,7 +21,7 @@ const starVelocities = times(STAR_COUNT, () => {
         argument: direction,
         magnitude: speed,
     }).scale(50)
-})
+}).map(vector => new THREE.Vector2(vector.x, vector.y))
 
 /* eslint-disable indent */
 const uniforms = {
@@ -31,10 +29,12 @@ const uniforms = {
           resolution: { value: new THREE.Vector3(500, 500) },
             DOT_SIZE: { value: 4 },
     //   LAYER_COUNTS: { value: [350, 100, 50] },
-       DOT_LOCATIONS: { value: starLocations.map(vector => new THREE.Vector2(vector.x, vector.y)) },
-      DOT_VELOCITIES: { value: starVelocities.map(vector => new THREE.Vector2(vector.x, vector.y)) },
+       DOT_LOCATIONS: { value: starLocations },
+      DOT_VELOCITIES: { value: starVelocities },
+      ASTEROID_COUNT: { value: 0 },
+  ASTEROID_LOCATIONS: { value: starLocations }, // placeholder stuff
         BULLET_COUNT: { value: 0 },
-    BULLET_LOCATIONS: { value: starLocations.map(vector => new THREE.Vector2(vector.x, vector.y)) },
+    BULLET_LOCATIONS: { value: starLocations }, // placeholder stuff
        SHIP_LOCATION: { value: new THREE.Vector2(250, 250) },
 }
 /* eslint-enable indent */
@@ -76,7 +76,7 @@ export default class Background {
 
     draw (time) {
         const { camera, game, renderer, scene } = this
-        const { bullets, ship } = game
+        const { asteroids, bullets, ship } = game
 
         time *= 0.001 // seconds
 
@@ -84,7 +84,12 @@ export default class Background {
         uniforms.BULLET_COUNT.value = bullets.length
         uniforms.BULLET_LOCATIONS.value = [
             ...bullets.map(({ position }) => new THREE.Vector2(position.x, 500 - position.y)),
-            ...starLocations.map(vector => new THREE.Vector2(vector.x, vector.y)),
+            ...starLocations,
+        ]
+        uniforms.ASTEROID_COUNT.value = asteroids.length
+        uniforms.ASTEROID_LOCATIONS.value = [
+            ...asteroids.map(({ position }) => new THREE.Vector2(position.x, 500 - position.y)),
+            ...starLocations,
         ]
         if (ship) {
             uniforms.SHIP_LOCATION.value = new THREE.Vector2(ship.position.x, 500 - ship.position.y)
