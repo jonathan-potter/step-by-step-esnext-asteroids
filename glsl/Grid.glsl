@@ -1,14 +1,13 @@
 #include <common>
 
-const int MAX_BULLET_COUNT = 100;
+const int MAX_THING_COUNT = 50; // asteroids and bullets
 
-uniform vec3 resolution;
-uniform float time;
+uniform vec2 resolution;
 
 uniform float ASTEROID_COUNT;
-uniform vec2 ASTEROID_LOCATIONS[MAX_BULLET_COUNT];
+uniform vec2 ASTEROID_LOCATIONS[MAX_THING_COUNT];
 uniform float BULLET_COUNT;
-uniform vec2 BULLET_LOCATIONS[MAX_BULLET_COUNT];
+uniform vec2 BULLET_LOCATIONS[MAX_THING_COUNT];
 uniform vec2 SHIP_LOCATION;
 
 const int GRID_SQUARE_COUNT = 10;
@@ -21,10 +20,10 @@ const int GRID_SQUARE_COUNT = 10;
 
 float shipOffsets[3];
 
-float distanceFromNearestThing ( vec2 location, vec2 thingLocations[MAX_BULLET_COUNT], float count ) {
+float distanceFromNearestThing ( vec2 location, vec2 thingLocations[MAX_THING_COUNT], float count ) {
     float distance = resolution.y;
 
-    for (int i = 0; i < MAX_BULLET_COUNT; i++) {
+    for (int i = 0; i < MAX_THING_COUNT; i++) {
         if (count <= float(i)) {
             return distance;
         }
