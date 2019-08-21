@@ -1,5 +1,5 @@
 const canvas = document.getElementById('canvas-stage')
-const context = canvas.getContext('2d')
+export const context = canvas.getContext('2d')
 
 const { PI } = Math
 
@@ -9,6 +9,8 @@ export default {
     },
 
     drawCircle ({ alpha = 1, x, y, radius, color = 'white', lineWidth = 2, fill }) {
+        context.save()
+
         context.beginPath()
         context.globalAlpha = alpha
         context.lineWidth = lineWidth
@@ -22,9 +24,13 @@ export default {
             context.fillStyle = color
             fill && context.fill()
         }
+
+        context.restore()
     },
 
     drawPoints ({ alpha = 1, points, color = 'white', lineWidth = 2 }) {
+        context.save()
+
         context.beginPath()
         context.globalAlpha = alpha
         context.lineWidth = lineWidth
@@ -38,5 +44,17 @@ export default {
 
         context.closePath()
         context.stroke()
+
+        context.restore()
+    },
+
+    drawImage ({ image, cx, cy, width, height, rotation }) {
+        context.save()
+
+        context.translate(cx, cy)
+        context.rotate(rotation)
+        context.drawImage(image, -width / 2, -height / 2, width, height)
+
+        context.restore()
     },
 }
