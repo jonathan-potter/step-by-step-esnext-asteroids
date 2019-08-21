@@ -75,17 +75,20 @@ export default class Background {
     }
 
     draw (time) {
-        const { camera, renderer, scene } = this
+        const { camera, game, renderer, scene } = this
+        const { bullets, ship } = game
 
         time *= 0.001 // seconds
 
         uniforms.time.value = time
-        uniforms.BULLET_COUNT.value = this.game.bullets.length
+        uniforms.BULLET_COUNT.value = bullets.length
         uniforms.BULLET_LOCATIONS.value = [
-            ...this.game.bullets.map(({ position }) => new THREE.Vector2(position.x, 500 - position.y)),
+            ...bullets.map(({ position }) => new THREE.Vector2(position.x, 500 - position.y)),
             ...starLocations.map(vector => new THREE.Vector2(vector.x, vector.y)),
         ]
-        uniforms.SHIP_LOCATION.value = new THREE.Vector2(this.game.ship.position.x, 500 - this.game.ship.position.y)
+        if (ship) {
+            uniforms.SHIP_LOCATION.value = new THREE.Vector2(ship.position.x, 500 - ship.position.y)
+        }
 
         renderer.render(scene, camera)
     }
