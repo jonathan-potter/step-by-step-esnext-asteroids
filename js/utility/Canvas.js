@@ -1,7 +1,15 @@
+import { NULL_VECTOR } from 'classes/Vec2'
+
 const canvas = document.getElementById('canvas-stage')
 export const context = canvas.getContext('2d')
 
 const { PI } = Math
+
+const SHADOW_COLOR = 'rgba(0, 0, 0, .5)'
+const SHADOW_OVERFLOW = 4 // px
+
+context.lineCap = 'round'
+context.lineJoin = 'round'
 
 export default {
     clear () {
@@ -13,13 +21,18 @@ export default {
 
         context.beginPath()
         context.globalAlpha = alpha
-        context.lineWidth = lineWidth
-        context.strokeStyle = color
+        context.lineWidth = lineWidth + SHADOW_OVERFLOW
+        context.strokeStyle = SHADOW_COLOR
 
         context.arc(x, y, radius, 0, 2 * PI)
 
         context.closePath()
         context.stroke()
+
+        context.lineWidth = lineWidth
+        context.strokeStyle = color
+        context.stroke()
+
         if (fill) {
             context.fillStyle = color
             fill && context.fill()
@@ -33,8 +46,8 @@ export default {
 
         context.beginPath()
         context.globalAlpha = alpha
-        context.lineWidth = lineWidth
-        context.strokeStyle = color
+        context.lineWidth = lineWidth + SHADOW_OVERFLOW
+        context.strokeStyle = SHADOW_COLOR
 
         const firstPoint = points.shift()
         context.moveTo(firstPoint.x, firstPoint.y)
@@ -45,13 +58,17 @@ export default {
         context.closePath()
         context.stroke()
 
+        context.lineWidth = lineWidth
+        context.strokeStyle = color
+        context.stroke()
+
         context.restore()
     },
 
-    drawImage ({ image, cx, cy, width, height, rotation }) {
+    drawImage ({ image, center = NULL_VECTOR, width, height, rotation }) {
         context.save()
 
-        context.translate(cx, cy)
+        context.translate(center.x, center.y)
         context.rotate(rotation)
         context.drawImage(image, -width / 2, -height / 2, width, height)
 

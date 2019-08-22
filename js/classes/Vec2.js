@@ -42,7 +42,7 @@ export default class Vec2 {
         return hypot(difference.x, difference.y)
     }
 
-    static fromArgumentAndMagnitude ({ argument, magnitude }) {
+    static fromArgumentAndMagnitude ({ argument = 0, magnitude = 1 }) {
         return new Vec2({
             x: magnitude * cos(argument),
             y: magnitude * sin(argument),

@@ -114,7 +114,7 @@ export default class Game {
     }
 
     executeSubscriptions () {
-        this.subscriptions.forEach(callback => callback ())
+        this.subscriptions.forEach(callback => callback())
     }
 
     tick (time) {

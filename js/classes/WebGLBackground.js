@@ -16,7 +16,7 @@ const uniforms = {
 }
 /* eslint-enable indent */
 
-export default class Background {
+export default class WebGLBackground {
     constructor (game) {
         this.game = game
 
