@@ -27,7 +27,7 @@ export default class Game {
         this.points = 0
         this.ship = new Ship()
         this.STARTING_LIVES = STARTING_LIVES
-        this.background = new Background()
+        this.background = new Background(this)
     }
 
     start () {
@@ -47,8 +47,8 @@ export default class Game {
         this.ship && this.ship.move()
     }
 
-    draw () {
-        this.background.draw()
+    draw (time) {
+        this.background.draw(time)
         this.asteroids.forEach(asteroid => asteroid.draw())
         this.bullets.forEach(bullet => bullet.draw())
         this.debris.forEach(debris => debris.draw())
@@ -114,10 +114,10 @@ export default class Game {
     }
 
     executeSubscriptions () {
-        this.subscriptions.forEach(callback => callback ())
+        this.subscriptions.forEach(callback => callback())
     }
 
-    tick () {
+    tick (time) {
         this.executeSubscriptions()
 
         if (!this.running) { return }
@@ -130,7 +130,7 @@ export default class Game {
         this.checkCollisions()
         this.handleCollisions()
         this.removeOutOfBounds()
-        this.draw()
+        this.draw(time)
 
         requestAnimationFrame(this.tick)
     }

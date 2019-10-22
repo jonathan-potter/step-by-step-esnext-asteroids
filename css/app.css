@@ -23,11 +23,18 @@ body {
     position: relative;
 }
 
-canvas {
-    width: 500px;
+.game-stage-container {
+    position: relative;
     height: 500px;
+    width: 500px;
     border: 2px solid white;
     margin: 40px 0 40px 0;
+}
+
+canvas {
+    position: absolute;
+    width: 500px;
+    height: 500px;
 }
 
 .game-header {

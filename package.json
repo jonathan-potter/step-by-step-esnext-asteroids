@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "webpack-dev-server",
-        "lint": "eslint js/"
+        "lint": "eslint ."
     },
     "keywords": [],
     "author": "",
@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "keymaster": "^1.6.2",
-        "lodash": "^4.17.15"
+        "lodash": "^4.17.15",
+        "three": "^0.107.0"
     }
 }
