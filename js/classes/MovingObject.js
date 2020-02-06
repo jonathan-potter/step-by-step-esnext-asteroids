@@ -58,8 +58,8 @@ export default class MovingObject {
 
     outOfBoundsDirection () {
         if (this.position.y <   0 - this.radius) { return 'N' }
-        if (this.position.x > 500 + this.radius) { return 'E' }
-        if (this.position.y > 500 + this.radius) { return 'S' }
+        if (this.position.x > Canvas.getWidth() + this.radius) { return 'E' }
+        if (this.position.y > Canvas.getHeight() + this.radius) { return 'S' }
         if (this.position.x <   0 - this.radius) { return 'W' }
     }
 
@@ -68,10 +68,10 @@ export default class MovingObject {
 
         if (!direction) { return }
 
-        if (direction === 'N') { return this.position.y += 500 + this.radius * 2 }
-        if (direction === 'E') { return this.position.x -= 500 + this.radius * 2 }
-        if (direction === 'S') { return this.position.y -= 500 + this.radius * 2 }
-        if (direction === 'W') { return this.position.x += 500 + this.radius * 2 }
+        if (direction === 'N') { return this.position.y += Canvas.getHeight() + this.radius * 2 }
+        if (direction === 'E') { return this.position.x -= Canvas.getWidth() + this.radius * 2 }
+        if (direction === 'S') { return this.position.y -= Canvas.getHeight() + this.radius * 2 }
+        if (direction === 'W') { return this.position.x += Canvas.getWidth() + this.radius * 2 }
     }
 
     isCollidedWith (otherObject) {

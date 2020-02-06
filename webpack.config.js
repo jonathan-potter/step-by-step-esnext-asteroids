@@ -8,10 +8,14 @@ module.exports = {
         contentBase: path.join(__dirname),
         publicPath: '/build/',
     },
-    entry: './js/index.js',
+    entry: {
+        gliffyWars: './js/global.js',
+        app: './js/index.js',
+        local: './js/localOperation.js',
+    },
     output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, 'build'),
+        filename: '[name].js',
+        path: __dirname + 'build',
     },
     resolve: {
         alias: {

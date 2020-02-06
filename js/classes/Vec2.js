@@ -36,6 +36,10 @@ export default class Vec2 {
         })
     }
 
+    magnitude () {
+        return hypot(this.x, this.y)
+    }
+
     static distance (vector1, vector2) {
         const difference = vector1.subtract(vector2)
 
