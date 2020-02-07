@@ -35,7 +35,10 @@ export default class Ship extends MovingObject {
         this.creation = Date.now()
         this.direction = INITIAL_DIRECTION
         this.points = POINTS
-        this.position = new Vec2({ x: 250, y: 250 })
+        this.position = new Vec2({
+            x: Canvas.getWidth() / 2,
+            y: Canvas.getHeight() / 2,
+        })
         this.velocity = NULL_VECTOR
     }
 

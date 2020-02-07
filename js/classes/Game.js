@@ -4,35 +4,45 @@ import Background from 'classes/Background.js'
 import Canvas from 'utility/Canvas.js'
 import Debris from 'classes/Debris.js'
 import key from 'keymaster'
+import sample from 'lodash/sample'
 import Ship from 'classes/Ship.js'
 
 const { requestAnimationFrame } = window
 
 const GAME_OVER_DELAY = 1000
-const MIN_ASTEROIDS = 5
+const MIN_ASTEROIDS = 25
 const STARTING_LIVES = 2
 
 export default class Game {
-    constructor () {
+    constructor ({ asteroids = [], canvasId, lives = STARTING_LIVES, shapes } = {}) {
+        Canvas.initialize({ canvasId })
+
+        this.bindHandlers()
+        this.extraLives = lives
+        this.shapes = shapes
+        this.startingLives = lives
         this.subscriptions = []
         this.tick = this.tick.bind(this)
-        this.bindHandlers()
+
+        this.reset()
+
+        this.asteroids = asteroids.map(asteroid => (
+            Asteroid.createFromPoints(asteroid)
+        ))
     }
 
     reset () {
         this.asteroids = []
         this.bullets = []
         this.debris = []
-        this.extraLives = STARTING_LIVES
+        this.extraLives = this.startingLives
         this.points = 0
         this.ship = new Ship()
-        this.STARTING_LIVES = STARTING_LIVES
         this.background = new Background(this)
     }
 
     start () {
         this.running = true
-        this.reset()
         this.tick()
     }
 
@@ -47,7 +57,7 @@ export default class Game {
         this.ship && this.ship.move()
     }
 
-    draw (time) {
+    draw (time = 0) {
         this.background.draw(time)
         this.asteroids.forEach(asteroid => asteroid.draw())
         this.bullets.forEach(bullet => bullet.draw())
@@ -62,7 +72,11 @@ export default class Game {
 
     repopulateAsteroids () {
         while (this.asteroids.length < MIN_ASTEROIDS) {
-            this.asteroids.push(Asteroid.createRandomOnBoundary())
+            if (this.shapes) {
+                this.asteroids.push(Asteroid.createRandomFromPoints(sample(this.shapes)))
+            } else {
+                this.asteroids.push(Asteroid.createRandomOnBoundary())
+            }
         }
     }
 

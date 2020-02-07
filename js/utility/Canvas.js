@@ -1,17 +1,39 @@
 import { NULL_VECTOR } from 'classes/Vec2'
 
-const canvas = document.getElementById('canvas-stage')
-export const context = canvas.getContext('2d')
+let canvas, context
 
 const { PI } = Math
 
 const SHADOW_COLOR = 'rgba(0, 0, 0, .5)'
 const SHADOW_OVERFLOW = 4 // px
 
-context.lineCap = 'round'
-context.lineJoin = 'round'
-
 export default {
+    initialize ({ canvasId = 'canvas-stage' } = {}) {
+        canvas = document.getElementById(canvasId)
+        context = canvas.getContext('2d')
+
+        context.lineCap = 'round'
+        context.lineJoin = 'round'
+        context.fillStyle = 'rgba(255, 255, 255, .5)'
+    },
+
+    getWidth () {
+        return canvas.width
+    },
+
+    getHeight () {
+        return canvas.height
+    },
+
+    getDimensions () {
+        return {
+            x: canvas.width,
+            y: canvas.height,
+            width: canvas.width,
+            height: canvas.height,
+        }
+    },
+
     clear () {
         context.clearRect(0, 0, 1e9, 1e9)
     },
@@ -73,5 +95,9 @@ export default {
         context.drawImage(image, -width / 2, -height / 2, width, height)
 
         context.restore()
+    },
+
+    fillRect () {
+        context.fillRect(...arguments)
     },
 }
